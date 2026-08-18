@@ -1,0 +1,3686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
+
+<title>LULO – Heritage Language AI Role-Play</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --p:#FF6B35;--pl:#FF8C5A;--pd:#E55525;
+  --teal:#4ECDC4;--acc:#FFD93D;
+  --ai:#6C63FF;--child:#FF6B9D;--comp:#4ECDC4;
+  --bg:#F8F9FF;--card:#fff;
+  --t1:#1A1A2E;--t2:#555770;--t3:#9799B8;
+  --bdr:#E8E9F3;
+  --r1:8px;--r2:14px;--r3:20px;--r4:28px;
+  --s1:0 2px 8px rgba(0,0,0,.06);--s2:0 4px 20px rgba(0,0,0,.10);
+  --font:'Nunito',sans-serif;
+}
+body{font-family:var(--font);background:#14141f;display:flex;justify-content:center;align-items:center;min-height:100vh;overflow:hidden}
+
+/* ── PHONE SHELL ── */
+#phone{position:relative;width:390px;height:844px;background:var(--bg);border-radius:44px;overflow:hidden;
+  box-shadow:0 32px 90px rgba(0,0,0,.6),0 0 0 12px #0d0d18}
+
+/* ── SCREENS ── */
+.scr{position:absolute;top:0;left:0;right:0;bottom:68px;display:none;flex-direction:column;background:var(--bg);overflow:hidden}
+.scr.active{display:flex}
+#s-splash{bottom:0;z-index:100}
+
+/* ── NAV ── */
+.nav{display:flex;align-items:center;justify-content:center;position:relative;padding:52px 18px 14px;background:var(--card);border-bottom:1px solid var(--bdr);flex-shrink:0;text-align:center}
+.nav-title{font-family:'Fredoka One',cursive;font-size:19px;color:var(--t1);text-align:center;margin:0 auto;width:100%}
+.nav-icon{position:absolute;right:18px;top:50px;background:none;border:none;font-size:22px;cursor:pointer;padding:4px}
+.nav-step{position:absolute;right:18px;top:52px;font-size:12px;color:var(--t3);font-weight:700;white-space:nowrap;background:var(--bg);padding:4px 8px;border-radius:20px;border:1px solid var(--bdr)}
+
+/* ── STEP BAR ── */
+.sprg{height:4px;background:var(--bdr);flex-shrink:0}
+.sbar{height:100%;background:var(--p);border-radius:2px;transition:width .4s ease}
+
+/* ── BODY ── */
+.bd{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:13px}
+.bd::-webkit-scrollbar{display:none}
+.ctr{align-items:center;text-align:center}
+.fctr{justify-content:center}
+
+/* ── BOTTOM NAV ── */
+.bnav{position:absolute;bottom:0;left:0;right:0;height:68px;display:flex;background:var(--card);border-top:1px solid var(--bdr);padding:6px 0 16px;z-index:90;box-shadow:0 -4px 16px rgba(0,0,0,.03)}
+.bnt{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:none;border:none;
+  cursor:pointer;font-family:var(--font);color:var(--t3);font-size:11px;font-weight:800;padding:2px 0}
+.bnt span:first-child{font-size:22px}
+.bnt.active{color:var(--p)}
+
+/* ── BUTTONS ── */
+.btn{font-family:var(--font);font-weight:800;border:none;cursor:pointer;border-radius:var(--r2);
+  transition:transform .15s,background .15s;display:flex;align-items:center;justify-content:center;
+  gap:6px;padding:14px 24px;font-size:15px}
+.btn:active{transform:scale(.96)}
+.bp{background:var(--p);color:#fff;box-shadow:0 4px 16px rgba(255,107,53,.35)}
+.bp:hover{background:var(--pl)}
+.bo{background:transparent;color:var(--p);border:2px solid var(--p)}
+.bdanger{background:#FF4757;color:#fff}
+.bfull{width:100%;margin-top:4px}
+.blg{padding:18px 40px;font-size:17px;border-radius:var(--r3)}
+.bxl{padding:20px 24px;font-size:17px}
+.bsm{padding:8px 14px;font-size:13px;border-radius:8px}
+
+
+.privacy-accordion-card{background:var(--card);border:1.5px solid var(--bdr);border-radius:var(--r2);transition:all .25s ease;overflow:hidden;box-shadow:var(--s1);margin-top:6px}
+.privacy-header:hover{background:rgba(0,0,0,0.015)}
+
+/* ── LABELS & INPUTS ── */
+.slbl{font-size:11px;font-weight:800;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;margin-top:4px}
+.slbl .req{background:var(--p);color:#fff;font-size:10px;padding:2px 6px;border-radius:4px;margin-left:6px}
+.slbl .opt{color:var(--t3);font-size:11px;text-transform:none;margin-left:4px;font-weight:600}
+.flbl{font-size:13px;font-weight:800;color:var(--t2);margin-top:4px}
+.fhint{font-size:12px;color:var(--t3);margin-top:-4px;line-height:1.5}
+.finput{width:100%;padding:13px 16px;border:2px solid var(--bdr);border-radius:var(--r1);
+  font-family:var(--font);font-size:15px;color:var(--t1);background:var(--card);transition:border-color .2s;outline:none}
+.finput:focus{border-color:var(--p)}
+.ftextarea{width:100%;padding:13px 16px;border:2px solid var(--bdr);border-radius:var(--r2);
+  font-family:var(--font);font-size:14px;color:var(--t1);background:var(--card);transition:border-color .2s;
+  outline:none;resize:none;line-height:1.6}
+.ftextarea:focus{border-color:var(--p)}
+.fstitle{font-family:'Fredoka One',cursive;font-size:22px;color:var(--t1);margin-bottom:4px}
+
+/* ── TOGGLE ── */
+.tgl{width:44px;height:24px;background:var(--bdr);border-radius:12px;position:relative;cursor:pointer;transition:background .2s}
+.tgl.on{background:var(--teal)}
+.knob{width:20px;height:20px;background:#fff;border-radius:50%;position:absolute;top:2px;left:2px;
+  transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.tgl.on .knob{transform:translateX(20px)}
+
+/* ── SETTINGS ROWS ── */
+.slist{background:var(--card);border-radius:var(--r2);overflow:hidden;border:1px solid var(--bdr)}
+.srow{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;
+  border-bottom:1px solid var(--bdr);font-size:14px;font-weight:600;color:var(--t1);cursor:pointer}
+.srow:last-child{border-bottom:none}
+.srow-nc{cursor:default}
+.sval{color:var(--t3);font-size:13px}
+
+
+/* ── Photo Uploader Component ── */
+.photo-upload-box{margin-bottom:12px}
+.photo-uploader-card{border:2px dashed #D3D6E8;border-radius:14px;background:#F9F9FC;padding:14px 12px;text-align:center;cursor:pointer;transition:all .2s ease;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.photo-uploader-card:hover{border-color:var(--p);background:#FFF8F5}
+.photo-uploader-card.has-photo{border:2px solid var(--p);background:#FFF9F6;padding:10px}
+.photo-uploader-preview{display:flex;flex-direction:column;align-items:center;gap:4px}
+.photo-uploader-preview .pu-icon{font-size:26px;line-height:1}
+.photo-uploader-preview .pu-text{font-size:13px;font-weight:700;color:var(--p)}
+.photo-uploader-preview .pu-sub{font-size:11px;color:var(--t3)}
+.photo-uploader-preview img.uploaded-img{width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid var(--p);box-shadow:0 2px 8px rgba(0,0,0,0.12);margin-bottom:4px}
+.photo-remove-btn{font-size:11.5px;font-weight:700;color:#E05252;text-align:center;margin-top:6px;cursor:pointer;text-decoration:underline}
+.or-divider{margin:12px 0 10px 0;display:flex;align-items:center;gap:10px}
+.or-divider-line{flex:1;height:1px;background:var(--bdr)}
+.or-divider-text{font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:0.5px}
+
+
+
+/* ── Minimalist Loading Spinner ── */
+.minimal-spinner{width:44px;height:44px;border:3.5px solid rgba(255,107,53,0.18);border-top-color:var(--p);border-radius:50%;animation:spinCircle .85s linear infinite;margin:auto}
+@keyframes spinCircle{to{transform:rotate(360deg)}}
+
+
+/* ── 3D Story Card Flip ── */
+.story-flip-container{perspective:1000px;width:100%;margin-bottom:12px;cursor:pointer}
+.story-flip-inner{position:relative;width:100%;min-height:260px;transition:transform .65s cubic-bezier(.34,1.56,.64,1);transform-style:preserve-3d}
+.story-flip-inner.is-flipped{transform:rotateY(180deg)}
+.story-card-front,.story-card-back{position:absolute;inset:0;width:100%;height:100%;-webkit-backface-visibility:hidden;backface-visibility:hidden;border-radius:22px;box-sizing:border-box;overflow:hidden;box-shadow:0 12px 32px rgba(10,14,40,0.35)}
+.story-card-front{background:url('moon_picnic_bg.jpg') center center / cover no-repeat;border:1px solid rgba(255,255,255,0.25);display:flex;flex-direction:column;justify-content:space-between;padding:16px;min-height:260px;position:relative}
+.story-card-front::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.25) 0%,rgba(0,0,0,0) 40%,rgba(0,0,0,0.6) 100%);pointer-events:none}
+.sc-front-badge{align-self:flex-start;background:rgba(255,255,255,0.25);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;font-size:12.5px;font-weight:800;padding:6px 14px;border-radius:20px;border:1px solid rgba(255,255,255,0.4);position:relative;z-index:2;text-shadow:0 1px 3px rgba(0,0,0,0.5)}
+.sc-front-footer{position:relative;z-index:2;display:flex;justify-content:flex-end}
+.sc-fancy-token{display:inline-flex;align-items:center;gap:5px;background:rgba(15,20,45,0.65);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);color:#fff;font-size:11.5px;font-weight:700;letter-spacing:0.2px;padding:6px 14px;border-radius:20px;border:1px solid rgba(255,255,255,0.35);box-shadow:0 4px 18px rgba(0,0,0,0.3);transition:all .25s ease}
+.story-flip-container:hover .sc-fancy-token{background:rgba(15,20,45,0.85);border-color:rgba(255,255,255,0.6);transform:translateY(-1px)}
+.sc-token-icon{color:#FFB830;font-size:13px}
+.sc-flipback-btn{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:rgba(255,255,255,0.9);background:rgba(255,255,255,0.12);backdrop-filter:blur(8px);padding:5px 11px;border-radius:16px;border:1px solid rgba(255,255,255,0.2);cursor:pointer;transition:all .2s ease}
+.sc-flipback-btn:hover{background:rgba(255,255,255,0.22)}
+
+.story-card-back{background:linear-gradient(135deg,#0E1230 0%,#1A2254 100%);border:1px solid rgba(255,255,255,0.2);transform:rotateY(180deg);display:flex;flex-direction:column;justify-content:space-between;text-align:left;padding:20px;color:#fff;min-height:260px}
+.sc-back-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+
+
+/* ── AVATAR PICKER ── */
+.avrow{display:flex;gap:10px;flex-wrap:wrap}
+.avpick{width:52px;height:52px;border-radius:50%;background:var(--bdr);display:flex;align-items:center;
+  justify-content:center;font-size:28px;cursor:pointer;border:3px solid transparent;transition:border-color .2s}
+.avpick.active{border-color:var(--p);background:#FFF5F0}
+
+/* ── STEPPER ── */
+.stepper{display:flex;align-items:center;gap:16px}
+.stbtn{width:40px;height:40px;border-radius:50%;border:2px solid var(--p);background:none;
+  font-size:20px;color:var(--p);cursor:pointer;font-weight:800;display:flex;align-items:center;justify-content:center}
+.stval{font-size:24px;font-weight:900;color:var(--t1)}
+
+/* ── PILLS ── */
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{padding:8px 14px;border-radius:20px;border:2px solid var(--bdr);font-size:13px;
+  font-weight:700;cursor:pointer;color:var(--t2);transition:all .2s}
+.pill.active{border-color:var(--p);color:var(--p);background:#FFF5F0}
+.pdesc{font-size:12px;color:var(--t3);margin-top:4px}
+
+/* ── INTEREST ── */
+.igrid{display:flex;flex-wrap:wrap;gap:8px}
+.itag{padding:8px 12px;border-radius:20px;border:2px solid var(--bdr);font-size:13px;
+  font-weight:700;cursor:pointer;color:var(--t2);transition:all .2s}
+.itag.active{border-color:var(--teal);color:#1a7a74;background:#EDFAF9}
+
+/* ── FILTER ── */
+.fpills{display:flex;gap:8px}
+.fpill{padding:7px 16px;border-radius:20px;border:2px solid var(--bdr);font-size:13px;
+  font-weight:700;cursor:pointer;color:var(--t3);transition:all .2s}
+.fpill.active{border-color:var(--p);color:var(--p);background:#FFF5F0}
+
+/* ══ LULO PURE MINIMAL WORDMARK SPLASH ══ */
+.splbg{width:100%;height:100%;background:var(--bg);display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none}
+.lulo-minimal-wordmark{font-family:'Fredoka One',cursive;font-size:56px;color:var(--p);letter-spacing:6px;animation:luloPop 1s cubic-bezier(0.16,1,0.3,1) forwards;text-align:center}
+@keyframes luloPop{0%{opacity:0;transform:scale(0.9) translateY(8px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+
+/* ══ HOME ══ */
+.hgreet{background:linear-gradient(135deg,#1a1a42,#2d1f6e);border-radius:var(--r3);padding:20px;color:#fff;box-shadow:var(--s2)}
+.gsub{font-size:12px;opacity:.7;font-weight:600;text-transform:uppercase;letter-spacing:.6px}
+.gmain{font-size:18px;font-weight:900;margin-top:6px;line-height:1.4}
+.gtagline{font-size:13px;opacity:.65;margin-top:6px;line-height:1.5}
+
+.chips-row{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px}
+.chips-row::-webkit-scrollbar{display:none}
+.chip{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer}
+.chav{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px}
+.chav.ch{background:#FFF0F5;border:2px solid var(--child)}
+.chav.pa{background:#F0FBFA;border:2px solid var(--teal)}
+.chav.add{background:var(--bdr);border:2px dashed var(--t3);font-size:20px;color:var(--t3)}
+.chip span{font-size:12px;font-weight:700;color:var(--t2)}
+
+.rcard{border-radius:16px;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px;box-shadow:0 4px 14px rgba(0,0,0,0.08);cursor:pointer;transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden;min-height:86px;background-size:cover;background-position:center;border:1px solid rgba(255,255,255,0.22)}
+.rcard:active{transform:scale(.98)}
+.rcard-dino{background:linear-gradient(90deg, rgba(14, 28, 20, 0.78) 0%, rgba(14, 28, 20, 0.55) 60%, rgba(14, 28, 20, 0.72) 100%), url('icon_dino.jpg') center center / cover no-repeat}
+.rcard-space{background:linear-gradient(90deg, rgba(16, 14, 38, 0.82) 0%, rgba(16, 14, 38, 0.55) 60%, rgba(16, 14, 38, 0.75) 100%), url('icon_space.jpg') center center / cover no-repeat}
+.rcard-ocean{background:linear-gradient(90deg, rgba(10, 26, 38, 0.80) 0%, rgba(10, 26, 38, 0.55) 60%, rgba(10, 26, 38, 0.75) 100%), url('icon_ocean.jpg') center center / cover no-repeat}
+.rcard-bakery{background:linear-gradient(90deg, rgba(38, 22, 12, 0.82) 0%, rgba(38, 22, 12, 0.55) 60%, rgba(38, 22, 12, 0.75) 100%), url('icon_bakery.jpg') center center / cover no-repeat}
+.rcard-moon{background:linear-gradient(90deg, rgba(12, 15, 42, 0.82) 0%, rgba(12, 15, 42, 0.55) 60%, rgba(12, 15, 42, 0.75) 100%), url('moon_picnic_bg.jpg') center center / cover no-repeat}
+.rinfo{flex:1;position:relative;z-index:2}
+.rtitle{font-size:15px;font-weight:800;color:#FFFFFF;text-shadow:0 1px 3px rgba(0,0,0,0.65);letter-spacing:-0.2px}
+.rmeta{font-size:12px;color:rgba(255,255,255,0.88);margin-top:3px;text-shadow:0 1px 2px rgba(0,0,0,0.55);font-weight:500}
+.rbadge{position:relative;z-index:2;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:800;backdrop-filter:blur(4px);background:rgba(255,255,255,0.22);border:1px solid rgba(255,255,255,0.3);color:#FFF;text-shadow:0 1px 2px rgba(0,0,0,0.4);box-shadow:0 2px 8px rgba(0,0,0,0.15);flex-shrink:0}
+
+/* ══ SETTINGS ══ */
+.smlist{display:flex;flex-direction:column;gap:8px}
+.smcard{background:var(--card);border-radius:var(--r2);padding:14px 16px;display:flex;
+  align-items:center;gap:14px;border:1px solid var(--bdr);cursor:pointer;transition:transform .2s}
+.smcard:active{transform:scale(.98)}
+.smcard.chc{border-left:4px solid var(--child)}
+.smav{font-size:32px}.sminfo{flex:1}
+.smname{font-size:15px;font-weight:800;color:var(--t1)}
+.smtype{font-size:12px;color:var(--t3);margin-top:2px}
+.smchev{font-size:20px;color:var(--t3)}
+
+/* usage bar */
+.usage-card{background:var(--card);border-radius:var(--r2);padding:16px;border:1px solid var(--bdr)}
+.usage-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.usage-plan{font-size:13px;font-weight:800;color:var(--p)}
+.usage-num{font-size:13px;color:var(--t3);font-weight:700}
+.ubar-bg{height:8px;background:var(--bdr);border-radius:4px;overflow:hidden}
+.ubar-fill{height:100%;background:linear-gradient(90deg,var(--p),#FF4DA6);border-radius:4px;transition:width .6s}
+.usage-label{font-size:12px;color:var(--t3);margin-top:8px}
+
+/* ══ SUBSCRIPTION ══ */
+.plan-card{background:var(--card);border-radius:var(--r3);padding:20px;border:2px solid var(--bdr);
+  cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
+.plan-card.active-plan{border-color:var(--p);box-shadow:0 4px 20px rgba(255,107,53,.2)}
+.plan-card.popular{border-color:var(--ai)}
+.plan-badge{position:absolute;top:14px;right:14px;background:var(--ai);color:#fff;
+  font-size:10px;font-weight:800;padding:3px 8px;border-radius:20px}
+.plan-cur{position:absolute;top:14px;right:14px;background:var(--p);color:#fff;
+  font-size:10px;font-weight:800;padding:3px 8px;border-radius:20px}
+.plan-name{font-family:'Fredoka One',cursive;font-size:22px;color:var(--t1)}
+.plan-price{font-size:28px;font-weight:900;color:var(--p);margin:4px 0}
+.plan-price span{font-size:14px;color:var(--t3);font-weight:600}
+.plan-mins{font-size:14px;font-weight:700;color:var(--t2);margin-bottom:10px}
+.plan-features{display:flex;flex-direction:column;gap:6px}
+.plan-feat{font-size:13px;color:var(--t2);font-weight:600}
+.plan-feat::before{content:'✓ ';color:var(--teal);font-weight:900}
+
+/* ══ ADD MEMBER ══ */
+.rchoose-lbl{font-size:17px;font-weight:800;color:var(--t1);margin-bottom:8px}
+.rcards{display:flex;flex-direction:column;gap:14px;width:100%}
+.rcard-c{background:var(--card);border-radius:var(--r4);padding:24px;text-align:center;
+  cursor:pointer;border:2px solid var(--bdr);transition:all .2s;box-shadow:var(--s1)}
+.rcard-c:hover{border-color:var(--p);transform:translateY(-2px)}
+.rccicon{font-size:48px;margin-bottom:8px}
+.rcctitle{font-size:17px;font-weight:800;color:var(--t1)}
+.rccdesc{font-size:13px;color:var(--t3);margin-top:4px;line-height:1.5}
+
+/* ══ VOICE REG ══ */
+.vdesc{color:var(--t2);font-size:14px;line-height:1.6}
+.vscript{background:linear-gradient(135deg,#0f0f2e,#1e1e5e);border-radius:var(--r2);padding:20px;width:100%}
+.vscript-lbl{font-size:12px;color:rgba(255,255,255,.5);margin-bottom:8px}
+.vscript-txt{color:#fff;font-size:15px;font-weight:800;line-height:1.6}
+.recarea{display:flex;flex-direction:column;align-items:center;gap:12px;padding:20px;width:100%}
+.recbtn{width:80px;height:80px;border-radius:50%;background:var(--p);border:none;cursor:pointer;
+  font-size:36px;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(255,107,53,.4);transition:transform .2s}
+.recbtn:hover{transform:scale(1.06)}
+.recbtn.recording{background:#FF4757;animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 10px rgba(255,71,87,.2)}50%{box-shadow:0 0 0 20px rgba(255,71,87,.1)}}
+.recst{font-size:13px;color:var(--t3);font-weight:600}
+.waveform{width:100%;height:40px;background:repeating-linear-gradient(90deg,var(--bdr) 0,var(--bdr) 2px,transparent 2px,transparent 6px);border-radius:4px}
+.vsample{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;
+  background:#EDFAF9;border-radius:8px;font-size:13px;font-weight:700;width:100%}
+.vscheck{color:var(--teal);font-weight:900}
+.vtip{font-size:12px;color:var(--t3)}
+
+/* ══ DONE ══ */
+.doneicon{font-size:80px;animation:bounce .6s ease}
+@keyframes bounce{0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+.donetitle{font-family:'Fredoka One',cursive;font-size:32px;color:var(--t1)}
+.donedesc{font-size:15px;color:var(--t2);line-height:1.6}
+
+/* ══ PROFILE ══ */
+.phero{text-align:center;padding:8px 0}
+.pbig{font-size:72px}
+.pname{font-family:'Fredoka One',cursive;font-size:28px;color:var(--t1);margin-top:4px}
+.pbadge{display:inline-block;padding:4px 12px;border-radius:20px;background:var(--bdr);
+  font-size:13px;font-weight:700;color:var(--t2);margin-top:8px}
+.pbadge.chb{background:#FFF0F5;color:var(--child)}
+.pstats{display:flex;gap:1px;background:var(--bdr);border-radius:var(--r2);overflow:hidden}
+.pstat{flex:1;background:var(--card);padding:14px 8px;text-align:center}
+.pstatv{font-size:20px;font-weight:900;color:var(--t1)}
+.pstatl{font-size:11px;color:var(--t3);font-weight:600;margin-top:2px}
+.vsr{display:flex;align-items:center;justify-content:space-between;
+  background:var(--card);border-radius:var(--r1);padding:12px 16px;border:1px solid var(--bdr);
+  font-size:14px;font-weight:600}
+
+/* ══ NEW SESSION ══ */
+.pcard{background:var(--card);border-radius:var(--r2);padding:14px 16px;display:flex;
+  align-items:center;gap:14px;border:2px solid var(--bdr);cursor:pointer;transition:all .2s}
+.pcard.sel{border-color:var(--p);background:#FFF5F0}
+.pcav{width:48px;height:48px;border-radius:50%;font-size:28px;display:flex;align-items:center;justify-content:center;background:#FFF0F5}
+.pcinfo{flex:1}
+.pcname{font-size:15px;font-weight:800;color:var(--t1)}
+.pcmeta{font-size:12px;color:var(--t3);margin-top:2px}
+.pcchk{font-size:20px;color:var(--p);font-weight:900}
+
+/* theme cards */
+.tscroll{display:flex;gap:12px;overflow-x:auto;padding:6px 4px 16px 4px}
+.tscroll::-webkit-scrollbar{display:none}
+.tc{position:relative;flex-shrink:0;width:152px;background:var(--card);border-radius:var(--r2);padding:18px 14px 16px;
+  cursor:pointer;border:2px solid var(--bdr);transition:all .22s cubic-bezier(0.4, 0, 0.2, 1);box-shadow:var(--s1);user-select:none}
+.tc:hover{border-color:#cbd5e1;transform:translateY(-2px)}
+.tc.sel{border-color:var(--p) !important;background:#FFF8F5 !important;box-shadow:0 8px 24px rgba(255,107,53,.24) !important;transform:translateY(-3px)}
+.tc-chk{position:absolute;top:10px;right:10px;width:22px;height:22px;border-radius:50%;border:2px solid var(--bdr);
+  display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:transparent;background:#fff;transition:all .2s}
+.tc.sel .tc-chk{border-color:var(--p);background:var(--p);color:#fff}
+.tc-aibadge{display:inline-block;font-size:10px;font-weight:800;color:#fff;background:linear-gradient(135deg, #FF6B35, #FF8E53);
+  padding:2px 7px;border-radius:10px;margin-bottom:8px;letter-spacing:0.3px}
+.tcemoji{font-size:36px;margin-bottom:6px;line-height:1.1}
+.tcname{font-size:14px;font-weight:800;color:var(--t1);line-height:1.3}
+.tcdesc{font-size:11.5px;color:var(--t3);margin-top:5px;line-height:1.4}
+.tclvl{font-size:11px;color:var(--p);margin-top:8px;font-weight:700;display:inline-flex;align-items:center;gap:3px}
+.ctheme{display:flex;gap:8px;align-items:center}
+.ctheme .finput{flex:1}
+
+/* story preview */
+.storycard{position:relative;background:linear-gradient(180deg, rgba(13, 16, 48, 0.72) 0%, rgba(20, 24, 68, 0.88) 100%), url('moon_picnic_bg.jpg') center center / cover no-repeat;border-radius:var(--r4);padding:22px 20px;color:#fff;border:1px solid rgba(255,255,255,0.18);box-shadow:0 12px 30px rgba(10,12,40,0.35);backdrop-filter:blur(4px)}
+.swbadge{display:inline-block;background:rgba(255,255,255,.14);padding:4px 10px;border-radius:20px;font-size:12px;font-weight:700;margin-bottom:10px}
+.stitle{font-family:'Fredoka One',cursive;font-size:21px;margin-bottom:10px}
+.sbody{font-size:14px;line-height:1.8;color:rgba(255,255,255,.85)}
+.sbody em{color:var(--acc);font-style:normal;font-weight:700}
+.stags{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.stag{background:rgba(255,255,255,.12);padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700}
+.sregen{margin-top:12px;border-color:rgba(255,255,255,.35);color:#fff;width:auto}
+
+/* role cards */
+.rc{background:var(--card);border-radius:var(--r2);padding:14px 16px;display:flex;align-items:center;
+  gap:14px;border-left:4px solid var(--bdr);cursor:pointer;box-shadow:var(--s1)}
+.rc.air{border-left-color:var(--ai)}
+.rc.chr{border-left-color:var(--child)}
+.rc.cor{border-left-color:var(--teal)}
+.rcav{font-size:36px}.rcinfo{flex:1}
+.rcwho{font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase}
+.rcname{font-size:14px;font-weight:800;color:var(--t1);margin-top:2px}
+.rcdesc{font-size:12px;color:var(--t3);margin-top:2px}
+.rcedit{font-size:18px;opacity:.5}
+
+/* ══ AI VOICE STEP ══ */
+.vc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.vc{background:var(--card);border-radius:var(--r3);padding:16px;border:2px solid var(--bdr);
+  cursor:pointer;transition:all .2s;text-align:center}
+.vc.sel{border-color:var(--ai);background:#F3F2FF;box-shadow:0 4px 16px rgba(108,99,255,.2)}
+.vc-icon{width:46px;height:46px;border-radius:12px;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;transition:transform .2s ease}
+.vc:hover .vc-icon, .vc.sel .vc-icon{transform:scale(1.08)}
+.prs-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.vc-name{font-size:13px;font-weight:800;color:var(--t1)}
+.vc-desc{font-size:11px;color:var(--t3);margin-top:3px;line-height:1.4}
+.vc-preview{font-size:11px;color:var(--ai);margin-top:6px;font-style:italic}
+
+.prs-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.prs{background:var(--card);border-radius:var(--r2);padding:14px;border:2px solid var(--bdr);
+  cursor:pointer;transition:all .2s;display:flex;gap:8px;align-items:flex-start}
+.prs.sel{border-color:var(--p);background:#FFF5F0}
+
+.prs-info{flex:1}
+.prs-name{font-size:13px;font-weight:800;color:var(--t1)}
+.prs-desc{font-size:11px;color:var(--t3);margin-top:2px;line-height:1.4}
+
+/* launch summary */
+.ls{width:100%;background:var(--card);border-radius:var(--r2);padding:16px;border:1px solid var(--bdr)}
+.lsrow{display:flex;justify-content:space-between;align-items:center;
+  padding:9px 0;border-bottom:1px solid var(--bdr);font-size:14px}
+.lsrow:last-child{border-bottom:none}
+.lslbl{color:var(--t3);font-weight:700}
+.lsval{font-weight:800;color:var(--t1);font-size:13px}
+.lbtn{background:linear-gradient(135deg,#FF6B35,#FF4DA6)}
+
+/* hardware callout */
+.hw-callout{background:linear-gradient(135deg,#1a1a42,#2d1f6e);border-radius:var(--r3);padding:18px;color:#fff;
+  display:flex;gap:14px;align-items:flex-start}
+.hw-icon{font-size:40px;flex-shrink:0}
+.hw-title{font-size:14px;font-weight:800;margin-bottom:4px}
+.hw-desc{font-size:12px;opacity:.7;line-height:1.5}
+
+/* ══ FANCY HARDWARE RADAR ORB ══ */
+.fancy-radar-container{position:relative;width:180px;height:180px;display:flex;align-items:center;justify-content:center;margin:10px auto 16px}
+.radar-ring{position:absolute;border-radius:50%;border:1.5px solid rgba(255,107,53,0.3);box-sizing:border-box;pointer-events:none}
+.radar-ring-1{width:110px;height:110px;animation:radarPulse 2.4s cubic-bezier(0.2,0.8,0.2,1) infinite}
+.radar-ring-2{width:145px;height:145px;animation:radarPulse 2.4s cubic-bezier(0.2,0.8,0.2,1) infinite 0.6s}
+.radar-ring-3{width:180px;height:180px;animation:radarPulse 2.4s cubic-bezier(0.2,0.8,0.2,1) infinite 1.2s}
+@keyframes radarPulse{0%{transform:scale(0.65);opacity:0.9;border-color:rgba(255,107,53,0.6)}50%{opacity:0.4}100%{transform:scale(1.15);opacity:0;border-color:rgba(255,107,53,0)}}
+
+.fancy-core-orb{position:relative;width:92px;height:92px;border-radius:50%;background:linear-gradient(145deg,#FFFFFF 0%,#FFF4EC 60%,#FFE5D4 100%);box-shadow:0 12px 36px rgba(255,107,53,0.28),inset 0 2px 4px rgba(255,255,255,0.9);display:flex;align-items:center;justify-content:center;z-index:2;border:2px solid rgba(255,107,53,0.4);transition:all .5s cubic-bezier(0.4,0,0.2,1)}
+.fancy-core-orb.connected{background:linear-gradient(145deg,#FFFFFF 0%,#EDFCF6 60%,#D1F8E6 100%);box-shadow:0 12px 36px rgba(0,210,135,0.32),inset 0 2px 4px rgba(255,255,255,0.9);border-color:rgba(0,210,135,0.5)}
+
+.orbit-particle{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--p);box-shadow:0 0 10px var(--p);top:50%;left:50%;margin:-3px 0 0 -3px;transform-origin:0 0;animation:orbitSpin 3.5s linear infinite}
+@keyframes orbitSpin{0%{transform:rotate(0deg) translate(54px) rotate(0deg)}100%{transform:rotate(360deg) translate(54px) rotate(-360deg)}}
+
+.fancy-radar-icon{transition:transform .3s ease;display:flex;align-items:center;justify-content:center}
+.fancy-core-orb.connected .fancy-radar-icon{transform:scale(1.08)}
+
+.conn-status-card{display:flex;align-items:center;gap:10px;background:#FFF0F0;border:1px solid #FFCDD2;border-radius:var(--r2);padding:12px 18px;box-shadow:0 2px 10px rgba(0,0,0,0.03)}
+.conn-dot{width:10px;height:10px;border-radius:50%;background:#E74C3C;animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ══ ROLE ASSIGNMENT CARDS ══ */
+.rc{background:var(--card);border-radius:var(--r2);padding:14px 16px;display:flex;align-items:center;gap:14px;border:1px solid var(--bdr);cursor:pointer;transition:all .2s;box-shadow:var(--s1)}
+.rc:hover{border-color:var(--p);transform:translateY(-1px)}
+.rcav{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;background:#F6F8FE;overflow:hidden}
+.rcinfo{flex:1;min-width:0}
+.rcwho{font-size:11px;font-weight:800;color:var(--t3);text-transform:uppercase;letter-spacing:.6px}
+.rcname{font-size:16px;font-weight:800;color:var(--t1);margin-top:2px}
+.rcedit{font-size:16px;color:var(--t3)}
+
+/* ══ LIVE ROLEPLAY MONITOR ══ */
+#s-roleplay{background:#0D0D1A}
+.rptop{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;background:rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.1);min-height:56px;box-sizing:border-box}
+.rpx{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:#fff;font-size:15px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;flex-shrink:0}
+.rpx:hover{background:rgba(255,255,255,.2)}
+.rptitle{flex:1;text-align:center;font-size:14px;font-weight:700;color:#fff;padding:0 12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rptimer{font-family:monospace;font-size:13px;font-weight:800;color:#FF8E53;background:rgba(255,107,53,.15);border:1px solid rgba(255,107,53,.3);padding:4px 10px;border-radius:12px;flex-shrink:0}
+.live-monitor-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:var(--r3);padding:20px;display:flex;flex-direction:column;gap:16px;align-items:center;text-align:center;width:100%}
+.live-wave-area{display:flex;align-items:center;gap:4px;height:48px}
+.live-wave-bar{width:6px;border-radius:3px;background:linear-gradient(180deg,#FF6B35,#FFD93D);animation:livewave 1s ease-in-out infinite alternate}
+@keyframes livewave{0%{height:8px}100%{height:42px}}
+.live-speaker-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);padding:6px 14px;border-radius:20px;font-size:13px;font-weight:800;color:#fff}
+.live-hint-box{background:rgba(255,217,61,.12);border:1px solid rgba(255,217,61,.3);border-radius:var(--r2);padding:14px 16px;font-size:13px;color:#FFE082;line-height:1.6;text-align:left;width:100%}
+
+/* ══ PAUSE ══ */
+.popts{display:flex;flex-direction:column;gap:10px;width:100%}
+.pbtn{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r2);padding:18px 20px;
+  font-family:var(--font);font-size:16px;font-weight:800;color:var(--t1);cursor:pointer;text-align:left;transition:all .2s}
+.pbtn:hover{border-color:var(--p)}
+.pbtn.danger{color:#FF4757}
+
+/* ══ SUMMARY ══ */
+.sumhero{background:linear-gradient(135deg,var(--p),#FF4DA6);border-radius:var(--r4);padding:20px;color:#fff;text-align:center}
+.sumworld{font-size:13px;opacity:.8}
+.sumtitle{font-family:'Fredoka One',cursive;font-size:22px;margin-top:4px}
+.sumparts{font-size:13px;opacity:.8;margin-top:4px}
+.scgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sc{background:var(--card);border-radius:var(--r2);padding:16px;text-align:center;border:1px solid var(--bdr);box-shadow:var(--s1)}
+.scv{font-size:22px;font-weight:900;color:var(--t1)}
+.scl{font-size:11px;color:var(--t3);font-weight:600;margin-top:4px}
+.lwords{display:flex;flex-wrap:wrap;gap:8px}
+.lword{padding:8px 14px;background:#EEF2FF;border-radius:20px;font-size:13px;font-weight:800;color:var(--ai);cursor:pointer}
+.lword:hover{background:#DDE3FF}
+.fbcard{display:flex;gap:12px;background:var(--card);border-radius:var(--r2);padding:16px;border:1px solid var(--bdr)}
+.fbav{font-size:36px;flex-shrink:0}
+.fbtxt{font-size:13px;color:var(--t2);line-height:1.7}
+.fbtxt strong{color:var(--p)}
+.sumactions{display:flex;flex-direction:column;gap:8px}
+
+/* ══ PROGRESS ══ */
+.cpanel{display:none}
+.cpanel.active{display:flex;flex-direction:column;gap:15px;padding-bottom:20px}
+.lpcard{background:var(--card);border-radius:var(--r2);padding:18px;border:1px solid var(--bdr);display:flex;flex-direction:column;gap:10px;box-shadow:var(--s1)}
+.lptop{display:flex;justify-content:space-between;font-size:14px;font-weight:800;color:var(--t1)}
+.lpbg{height:12px;background:var(--bdr);border-radius:6px;overflow:hidden}
+.lpfill{height:100%;background:linear-gradient(90deg,var(--p),#FF4DA6);border-radius:6px;transition:width .6s ease}
+.lppct{font-size:13px;color:var(--t2);font-weight:600;display:flex;align-items:center;justify-content:space-between}
+.wchart{display:flex;gap:10px;align-items:flex-end;height:125px;background:var(--card);
+  border-radius:var(--r2);padding:16px 18px;border:1px solid var(--bdr);box-shadow:var(--s1)}
+.dbw{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end}
+.db{width:100%;max-width:24px;border-radius:6px 6px 0 0;background:linear-gradient(180deg,#FF8A65,var(--p));opacity:.5;transition:all .3s}
+.db.today{opacity:1;box-shadow:0 2px 8px rgba(255,107,53,.35)}
+.dl{font-size:11px;font-weight:700;color:var(--t3)}
+.catpills{display:flex;flex-wrap:wrap;gap:8px}
+.catpill{padding:9px 15px;background:var(--card);border-radius:20px;border:1px solid var(--bdr);font-size:13px;font-weight:700;color:var(--t2);box-shadow:var(--s1);display:flex;align-items:center;gap:6px}
+.catpill strong{color:var(--p);background:#FFF5F0;padding:2px 8px;border-radius:12px;font-size:12px}
+.vocab-grid{display:flex;flex-wrap:wrap;gap:8px}
+.vocab-chip{padding:8px 14px;background:#F6F8FE;border:1px solid #E1E6F8;border-radius:14px;font-size:13px;font-weight:700;color:#394874}
+
+/* ══ BOTTOM SHEETS ══ */
+.bsov{position:absolute;inset:0;background:transparent;z-index:100;pointer-events:none;transition:background .3s}
+.bsov.active{background:rgba(0,0,0,.5);pointer-events:all}
+.bs{position:absolute;bottom:-120%;left:0;right:0;background:var(--card);border-radius:24px 24px 0 0;
+  padding:16px 20px 40px;z-index:101;transition:bottom .35s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;gap:12px}
+.bs.active{bottom:0}
+.bshandle{width:36px;height:4px;background:var(--bdr);border-radius:2px;align-self:center;margin-bottom:4px}
+.bstitle{font-family:'Fredoka One',cursive;font-size:20px;text-align:center}
+.bsword{font-family:'Fredoka One',cursive;font-size:36px;text-align:center;color:var(--p)}
+.bsph{text-align:center;color:var(--t3);font-size:14px}
+.bsmean{text-align:center;font-size:18px;font-weight:800;color:var(--t1)}
+.bsex{text-align:center;font-size:13px;color:var(--t2);line-height:1.6;background:#F8F9FF;border-radius:10px;padding:12px}
+/* ══ REVIEW LOG ══ */
+.rlog-bbl{display:flex;gap:10px;align-items:flex-start}
+.rlog-bbl.rlog-right{flex-direction:row-reverse}
+.rlog-av{font-size:18px;width:32px;height:32px;border-radius:50%;text-align:center;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.08)}
+.rlog-av img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.rlog-cont{max-width:278px;display:flex;flex-direction:column;gap:4px}
+.rlog-r{align-items:flex-end}
+.rlog-who{font-size:11px;font-weight:800;color:var(--t3)}
+.rlog-who.r{text-align:right}
+.rlog-action{font-size:11px;color:var(--t3);font-style:italic;line-height:1.4}
+.rlog-txt{border-radius:12px 12px 12px 4px;padding:10px 13px;font-size:13px;line-height:1.65;color:var(--t1)}
+.rlog-right .rlog-txt{border-radius:12px 12px 4px 12px}
+.rlog-ai .rlog-txt{background:#F0EEFF;border:1px solid #ddd8ff}
+.rlog-child .rlog-txt{background:#FFF0F5;border:1px solid #ffd5e5}
+.rlog-comp .rlog-txt{background:#EDFAF9;border:1px solid #c8f0ed}
+.rlog-sys{text-align:center;font-size:11px;color:var(--t3);padding:5px 14px;background:var(--bdr);border-radius:20px;align-self:center;font-style:italic}
+.issue-badge{display:flex;align-items:flex-start;gap:8px;background:#FFF5F5;border:1px solid #FFCDD2;border-radius:10px;padding:10px 12px}
+.issue-icon{font-size:13px;flex-shrink:0;margin-top:1px}
+.issue-txt{font-size:12px;color:#c0392b;font-weight:700;line-height:1.5}
+.score-bkdn{background:var(--card);border-radius:var(--r2);padding:16px;border:1px solid var(--bdr)}
+.sbrow{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--bdr);font-size:13px;gap:8px}
+.sbrow:last-child{border-bottom:none}
+.sblbl{font-weight:700;color:var(--t2);flex-shrink:0}
+.sbval{font-weight:800;color:var(--t1);text-align:right;font-size:13px}
+.sbval.good{color:#27ae60}
+.sbval.bad{color:#e74c3c}
+.overall-stars{text-align:center;font-size:30px;padding:8px 0 4px;letter-spacing:4px}
+.sum-hero-bad{background:linear-gradient(135deg,#5c1414,#7a2626)}
+/* ══ Photo avatars ══ */
+.av-img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;}
+/* ══ HERO PICKER ══ */
+.hcards{display:flex;flex-direction:column;gap:10px}
+.hcard{background:var(--card);border-radius:var(--r2);padding:14px 16px;display:flex;
+  align-items:center;gap:12px;border:2px solid var(--bdr);cursor:pointer;transition:all .25s;position:relative}
+.hcard.active{border-color:var(--acc);background:#FFFDF0;box-shadow:0 3px 16px rgba(255,217,61,.25)}
+.hcard-crown{font-size:18px;opacity:0;transition:opacity .2s;flex-shrink:0}
+.hcard.active .hcard-crown{opacity:1}
+.hcard-av{font-size:36px;flex-shrink:0}
+.hcard-info{flex:1;min-width:0}
+.hcard-name{font-size:15px;font-weight:800;color:var(--t1)}
+.hcard-meta{font-size:12px;color:var(--t3);margin-top:2px}
+.hcard-tags{font-size:16px;margin-top:5px;letter-spacing:2px}
+.hcard-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--bdr);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.hcard.active .hcard-radio{border-color:var(--acc);background:var(--acc)}
+.hcard.active .hcard-radio::after{content:'';width:8px;height:8px;border-radius:50%;background:#fff}
+.supp-tag{display:inline-block;font-size:11px;background:#F0F0F0;color:#777;padding:2px 7px;border-radius:10px;font-weight:700;margin-left:6px;vertical-align:middle}
+.hero-explain{background:#FFFBEA;border:1px solid #FFE082;border-radius:var(--r1);padding:10px 12px;font-size:12px;color:#7a5c00;line-height:1.6}
+.max-note{font-size:12px;color:var(--t3);text-align:center;margin-top:4px}
+/* ══ Day-activity indicators ══ */
+.dem{font-size:13px;text-align:center;min-height:18px;line-height:18px;margin-bottom:2px}
+.db-off{opacity:0.22}
+/* ══ Compact member list ══ */
+.smlist.compact .smcard{padding:9px 12px}
+.smlist.compact .smav{width:36px;height:36px;font-size:20px}
+.smlist.compact .smname{font-size:13px}
+.smlist.compact .smtype{font-size:11px}
+/* ══ Date group headers ══ */
+.dgrp{font-size:11px;font-weight:800;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;padding:4px 0 6px;margin-top:8px}
+/* ══ Child tabs (Growth) ══ */
+.ctabs{display:flex;gap:6px;background:#F0F0F0;padding:4px;border-radius:14px;margin-bottom:14px}
+.ctab{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:8px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:700;color:var(--t2);transition:all .2s}
+.ctab.active{background:#fff;color:var(--t1);box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.ctav{width:26px;height:26px;border-radius:50%;overflow:hidden;flex-shrink:0}
+.cpanel{display:none}.cpanel.active{display:block}
+/* ══ Member filter (Adventures) ══ */
+.mfrow{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:8px}
+.mfchip{display:flex;align-items:center;gap:5px;padding:5px 11px;border-radius:20px;background:#F5F5F5;font-size:12px;font-weight:700;cursor:pointer;border:2px solid transparent;color:var(--t2);transition:all .15s}
+.mfchip.active{background:#FFF9E6;border-color:var(--acc);color:#8a6a00}
+.mfav{width:20px;height:20px;border-radius:50%;overflow:hidden;flex-shrink:0}
+</style>
+</head>
+<body>
+<div id="phone">
+
+<!-- ════════ SPLASH ════════ -->
+<div class="scr active" id="s-splash" onclick="go('s-home')">
+  <div class="splbg">
+    <div class="lulo-minimal-wordmark">LULO</div>
+  </div>
+</div>
+
+<!-- ════════ HOME ════════ -->
+<div class="scr" id="s-home">
+  <div class="nav">
+    <h2 class="nav-title">LULO</h2>
+  </div>
+  <div class="bd">
+    <div class="hgreet">
+      <div class="gsub">Welcome back! 👋</div>
+      <div class="gmain">Ready for today's adventure?</div>
+      <div class="gtagline">Choose who's playing today and dive into a brand new story world together!</div>
+    </div>
+    <div class="slbl">Members</div>
+    <div class="chips-row" id="home-members-row">
+      <!-- Dynamically rendered -->
+    </div>
+    <div class="slbl">Recent Adventures</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="rcard rcard-dino" onclick="go('s-summary-best')">
+        <div class="rinfo">
+          <div class="rtitle">Mystery of the Missing Egg</div>
+          <div class="rmeta">Jiwoo · Mom · English · 3 days ago</div>
+        </div>
+        <div class="rbadge" style="background:rgba(39, 174, 96, 0.5);border-color:rgba(39,174,96,0.7)">⭐⭐⭐</div>
+      </div>
+      <div class="rcard rcard-space" onclick="go('s-summary-worst')">
+        <div class="rinfo">
+          <div class="rtitle">Signal from Planet Luminos</div>
+          <div class="rmeta">Jiwoo · Minjun · Soeun · English · 1 week ago</div>
+        </div>
+        <div class="rbadge" style="background:rgba(231, 76, 60, 0.5);border-color:rgba(231,76,60,0.7)">⭐</div>
+      </div>
+    </div>
+    <button class="btn bp bfull bxl" onclick="go('s-ns1')">✨ Start New Adventure</button>
+  </div>
+</div>
+
+<!-- ════════ SETTINGS ════════ -->
+<div class="scr" id="s-settings">
+  <div class="nav">
+    <h2 class="nav-title">Settings</h2>
+  </div>
+  <div class="bd" style="padding-bottom:120px;overflow-y:auto">
+    
+    <!-- Subscription usage -->
+    <div class="slbl">Subscription</div>
+    <div class="usage-card" style="background:#fff;border:1px solid #E8E9F3;border-radius:14px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,0.04)">
+      <div class="usage-top" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div class="usage-plan" style="font-weight:800;color:#1A1A2E;font-size:15px">🌟 Family Plan</div>
+        <div class="usage-num" style="font-weight:800;color:var(--p);font-size:14px">187 / 450 min</div>
+      </div>
+      <div class="ubar-bg" style="width:100%;height:8px;background:#F0F2F8;border-radius:4px;overflow:hidden;margin-bottom:8px">
+        <div class="ubar-fill" style="width:41%;height:100%;background:var(--p);border-radius:4px"></div>
+      </div>
+      <div class="usage-label" style="font-size:12px;color:#9799B8">263 minutes remaining this month · Resets Sept 1</div>
+    </div>
+    <button class="btn bo bfull" onclick="go('s-subscription')" style="margin-top:6px;border:2px solid var(--p);color:var(--p);background:#fff;padding:14px;border-radius:14px;font-weight:800;font-size:15px;cursor:pointer;width:100%">Manage Subscription</button>
+
+    <!-- Members section -->
+    <div class="slbl" style="margin-top:16px">Members</div>
+    <div class="smlist compact" id="settings-members-list" style="display:flex;flex-direction:column;gap:10px">
+      <!-- Dynamically rendered -->
+    </div>
+    <button class="btn bo bfull" onclick="go('s-add-member')" style="margin-top:6px;border:2px solid var(--p);color:var(--p);background:#fff;padding:14px;border-radius:14px;font-weight:800;font-size:15px;cursor:pointer;width:100%">+ Add Member</button>
+
+    <!-- App Settings section with triangle toggle -->
+    <div class="slbl" onclick="toggleAppSettingsAccordion()" style="margin-top:20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;padding:4px 0">
+      <span style="font-size:11px;font-weight:800;color:var(--t3);text-transform:uppercase;letter-spacing:0.8px">App Settings</span>
+      <span id="app-settings-triangle-icon" style="font-size:12px;color:var(--t3);transition:transform .2s ease;font-weight:700">▼</span>
+    </div>
+    
+    <div id="app-settings-content" style="display:none;background:#fff;border-radius:14px;border:1.5px solid #E8E9F3;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,0.04);margin-top:8px;flex-direction:column">
+      
+      <!-- 1. App Interface Language -->
+      <div class="srow" style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #E8E9F3">
+        <div>
+          <div style="font-weight:800;color:#1A1A2E;font-size:14px">App Interface Language</div>
+          <div style="font-size:11.5px;color:#9799B8;margin-top:2px">Menu and navigation language</div>
+        </div>
+        <select id="sel-app-lang" onchange="onAppLangChange(this)" style="border:1.5px solid #D1D5E8;background:#F8F9FE;padding:7px 10px;border-radius:10px;font-size:13px;font-weight:700;color:#1A1A2E;outline:none;cursor:pointer">
+          <option value="English" selected>English 🇺🇸</option>
+          <option value="한국어">한국어 🇰🇷</option>
+          <option value="Español">Español 🇪🇸</option>
+        </select>
+      </div>
+
+      <!-- 2. Heritage Language (Roleplay Practice) -->
+      <div class="srow" style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #E8E9F3">
+        <div>
+          <div style="font-weight:800;color:#1A1A2E;font-size:14px">Heritage Language</div>
+          <div style="font-size:11.5px;color:#9799B8;margin-top:2px">Language spoken in AI roleplays</div>
+        </div>
+        <select id="sel-heritage-lang" onchange="onHeritageLangChange(this)" style="border:1.5px solid #D1D5E8;background:#F8F9FE;padding:7px 10px;border-radius:10px;font-size:13px;font-weight:700;color:#1A1A2E;outline:none;cursor:pointer">
+          <option value="Korean" selected>Korean 🇰🇷</option>
+          <option value="Spanish">Spanish 🇪🇸</option>
+          <option value="Japanese">Japanese 🇯🇵</option>
+          <option value="Mandarin">Mandarin 🇨🇳</option>
+        </select>
+      </div>
+
+      <!-- 3. Primary Home Language -->
+      <div class="srow" style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #E8E9F3">
+        <div>
+          <div style="font-weight:800;color:#1A1A2E;font-size:14px">Primary Home Language</div>
+          <div style="font-size:11.5px;color:#9799B8;margin-top:2px">Child's primary daily language</div>
+        </div>
+        <select id="sel-daily-lang" style="border:1.5px solid #D1D5E8;background:#F8F9FE;padding:7px 10px;border-radius:10px;font-size:13px;font-weight:700;color:#1A1A2E;outline:none;cursor:pointer">
+          <option value="English" selected>English 🇺🇸</option>
+          <option value="Korean">Korean 🇰🇷</option>
+          <option value="Bilingual">Bilingual 🌐</option>
+        </select>
+      </div>
+
+      <!-- 4. AI Hints for Parents -->
+      <div class="srow" style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #E8E9F3;font-size:14px;color:#1A1A2E">
+        <div>
+          <div style="font-weight:800">AI Hints for Parents</div>
+          <div style="font-size:11.5px;color:#9799B8;margin-top:2px">Real-time coaching during play</div>
+        </div>
+        <div class="tgl on" onclick="toggleSw(this)"><div class="knob"></div></div>
+      </div>
+
+      <!-- 5. Progress Notifications -->
+      <div class="srow" style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;font-size:14px;color:#1A1A2E">
+        <div>
+          <div style="font-weight:800">Weekly Progress Reports</div>
+          <div style="font-size:11.5px;color:#9799B8;margin-top:2px">Vocabulary milestone alerts</div>
+        </div>
+        <div class="tgl on" onclick="toggleSw(this)"><div class="knob"></div></div>
+      </div>
+    </div>
+
+    <!-- ── Minimal Clean Trust & Privacy with Triangle Toggle ── -->
+    <div class="slbl" onclick="togglePrivacyAccordion()" style="margin-top:22px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;padding:4px 0">
+      <span style="font-size:11px;font-weight:800;color:var(--t3);text-transform:uppercase;letter-spacing:0.8px">Trust & Privacy</span>
+      <span id="privacy-triangle-icon" style="font-size:12px;color:var(--t3);transition:transform .2s ease;font-weight:700">▼</span>
+    </div>
+
+    <!-- Expandable Policy Text without Emojis -->
+    <div id="privacy-content" style="display:none;background:var(--card);border:1px solid var(--bdr);border-radius:var(--r2);padding:16px 18px;margin-top:8px;box-shadow:var(--s1)">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div>
+          <div style="font-size:13.5px;font-weight:800;color:var(--t1)">1. Zero Public AI Training on Child Voice</div>
+          <div style="font-size:12px;color:var(--t2);line-height:1.65;margin-top:3px">
+            Voice recordings and conversations are strictly isolated and never used to train public generative AI models or sold to third parties.
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size:13.5px;font-weight:800;color:var(--t1)">2. Age-Appropriate AI Safety Guardrails</div>
+          <div style="font-size:12px;color:var(--t2);line-height:1.65;margin-top:3px">
+            Every storyline and dialogue response passes through strict pedagogical safety filters. Frightening themes, mature topics, and sensitive content are filtered out in real-time.
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size:13.5px;font-weight:800;color:var(--t1)">3. COPPA & GDPR-K Compliance</div>
+          <div style="font-size:12px;color:var(--t2);line-height:1.65;margin-top:3px">
+            Compliant with global child privacy regulations. All network transmissions use TLS 1.3, and cloud storage is encrypted with AES-256. No advertising SDKs or tracking scripts.
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size:13.5px;font-weight:800;color:var(--t1)">4. Parental Control & Data Erasure</div>
+          <div style="font-size:12px;color:var(--t2);line-height:1.65;margin-top:3px">
+            You can disable recording before any adventure, or permanently erase all conversation history and vocabulary logs anytime in Settings.
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size:13.5px;font-weight:800;color:var(--t1)">5. Physical Toy Hardware Security</div>
+          <div style="font-size:12px;color:var(--t2);line-height:1.65;margin-top:3px">
+            The toy connects strictly over encrypted Bluetooth with your parent app. The device contains no camera, no location GPS tracking, and no direct internet connection.
+          </div>
+        </div>
+
+        <div style="border-top:1px solid var(--bdr);padding-top:10px;font-size:12px;color:var(--t3)">
+          Contact: privacy@lulo-learning.com
+        </div>
+      </div>
+    </div></div>
+</div>
+
+<!-- ════════ AI SAFETY & PRIVACY FULL SCREEN ════════ -->
+<div class="scr" id="s-privacy">
+  <div class="nav">
+    <button class="nav-back" onclick="go('s-settings')">‹</button>
+    <h2 class="nav-title">AI Safety & Privacy</h2>
+  </div>
+  <div class="bd" style="padding-bottom:30px">
+    
+    <!-- Hero Banner -->
+    <div style="background:linear-gradient(135deg, #1C244B 0%, #2A3672 100%);border-radius:var(--r3);padding:20px;color:#fff;box-shadow:var(--s2)">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+        <div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;color:#4ECDC4">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <div>
+          <div style="font-family:'Fredoka One',cursive;font-size:18px;letter-spacing:0.5px">Our Child-First Pledge</div>
+          <div style="font-size:11.5px;color:rgba(255,255,255,0.7)">Last Updated: August 2026 · Version 2.4</div>
+        </div>
+      </div>
+      <div style="font-size:13px;line-height:1.65;color:rgba(255,255,255,0.9)">
+        At <strong>LULO</strong>, we believe generative AI should empower family bonding and language growth without compromising privacy or innocence. Here is how we safeguard your child and data.
+      </div>
+    </div>
+
+    <!-- Section 1: Non-Training Policy -->
+    <div style="background:var(--card);border:1px solid var(--bdr);border-radius:var(--r2);padding:18px;box-shadow:var(--s1)">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <span style="font-size:18px">🛡️</span>
+        <div style="font-size:15px;font-weight:800;color:var(--t1)">1. Zero Public AI Training on Child Voice</div>
+      </div>
+      <div style="font-size:13px;color:var(--t2);line-height:1.7">
+        • <strong>No Foundation Training:</strong> Your child’s voice recordings, spoken phrases, and roleplay interactions are strictly isolated in a private secure enclave. They are <strong>never used to train public generative models</strong> (like ChatGPT, Claude, Gemini, or open-source speech models).<br>
+        • <strong>Zero Data Brokering:</strong> We will never sell, license, or monetize your family’s voice or behavioral data to third-party advertisers or data brokers.
+      </div>
+    </div>
+
+    <!-- Section 2: AI Safety & Child Guardrails -->
+    <div style="background:var(--card);border:1px solid var(--bdr);border-radius:var(--r2);padding:18px;box-shadow:var(--s1)">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <span style="font-size:18px">👶</span>
+        <div style="font-size:15px;font-weight:800;color:var(--t1)">2. Age-Appropriate AI Guardrails</div>
+      </div>
+      <div style="font-size:13px;color:var(--t2);line-height:1.7">
+        • <strong>Pedagogical Safety Filters:</strong> Every storyline, prompt, and AI response is vetted by multi-tiered pedagogical classifiers to ensure positive reinforcement, constructive emotional tone, and cultural warmth.<br>
+        • <strong>Real-time Harm Prevention:</strong> Frightening themes, mature topics, violence, and sensitive concepts are actively intercepted and redirected to gentle, encouraging topics before reaching your child’s device.
+      </div>
+    </div>
+
+    <!-- Section 3: Legal Compliance -->
+    <div style="background:var(--card);border:1px solid var(--bdr);border-radius:var(--r2);padding:18px;box-shadow:var(--s1)">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <span style="font-size:18px">🔒</span>
+        <div style="font-size:15px;font-weight:800;color:var(--t1)">3. COPPA & GDPR-K Certified Protection</div>
+      </div>
+      <div style="font-size:13px;color:var(--t2);line-height:1.7">
+        • <strong>Strict Global Standards:</strong> LULO complies with the US Children’s Online Privacy Protection Act (COPPA), European GDPR-K, and Canadian PIPEDA standards.<br>
+        • <strong>End-to-End Encryption:</strong> All data in transit is protected using TLS 1.3, and data stored at rest uses military-grade AES-256 encryption.<br>
+        • <strong>Zero Ad SDKs:</strong> No advertising trackers, behavioral analytics, or third-party tracking scripts are embedded in our mobile software.
+      </div>
+    </div>
+
+    <!-- Section 4: Parental Controls -->
+    <div style="background:var(--card);border:1px solid var(--bdr);border-radius:var(--r2);padding:18px;box-shadow:var(--s1)">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <span style="font-size:18px">⚙️</span>
+        <div style="font-size:15px;font-weight:800;color:var(--t1)">4. 100% Parental Control & Erasure</div>
+      </div>
+      <div style="font-size:13px;color:var(--t2);line-height:1.7">
+        • <strong>Per-Session Recording Control:</strong> You can toggle <em>"Save Transcript to History"</em> off before starting any adventure. When toggled off, no audio or conversation log is stored.<br>
+        • <strong>1-Click Instant Deletion:</strong> Parents hold absolute ownership. You may export or permanently delete your family’s entire conversation history, vocabulary insights, and account data at any time from Settings.
+      </div>
+    </div>
+
+    <!-- Section 5: Hardware & Toy Security -->
+    <div style="background:var(--card);border:1px solid var(--bdr);border-radius:var(--r2);padding:18px;box-shadow:var(--s1)">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <span style="font-size:18px">🧸</span>
+        <div style="font-size:15px;font-weight:800;color:var(--t1)">5. Physical Toy Hardware Security</div>
+      </div>
+      <div style="font-size:13px;color:var(--t2);line-height:1.7">
+        • <strong>Secure Local Pairing:</strong> The companion toy connects exclusively to your authenticated parent smartphone via secure Bluetooth Low Energy (BLE).<br>
+        • <strong>No Open Inbound Ports:</strong> The toy contains no camera, no location GPS tracking, and no direct open internet connection.
+      </div>
+    </div>
+
+    <!-- Section 6: Contact -->
+    <div style="background:#FFF9F2;border:1px solid #FFE0B2;border-radius:var(--r2);padding:16px;text-align:center">
+      <div style="font-size:13px;font-weight:800;color:#E65100">Questions or Data Privacy Inquiries?</div>
+      <div style="font-size:12px;color:#8D6E63;margin-top:4px">Our dedicated Family Safety Officer is available 24/7 at:</div>
+      <div style="font-size:13px;font-weight:800;color:var(--p);margin-top:4px">privacy@lulo-learning.com</div>
+    </div>
+
+    <button class="btn bo bfull" onclick="go('s-settings')" style="margin-top:8px">‹ Back to Settings</button>
+  </div>
+</div>
+
+<!-- ════════ SUBSCRIPTION ════════ -->
+<div class="scr" id="s-subscription">
+  <div class="nav">
+    <h2 class="nav-title">Plans</h2>
+  </div>
+  <div class="bd">
+    <div style="font-size:14px;color:var(--t2);line-height:1.6">
+      Choose a plan that fits your family. Minutes are shared across all members each month.
+    </div>
+
+    <div class="plan-card" onclick="selectPlan(this,'basic')" id="plan-basic">
+      <div class="plan-name">Basic</div>
+      <div class="plan-price">$10.99 <span>CAD / month</span></div>
+      <div class="plan-mins">200 min / month</div>
+      <div class="plan-features">
+        <div class="plan-feat">1 child profile</div>
+        <div class="plan-feat">AI-generated stories</div>
+        <div class="plan-feat">Session chat log</div>
+        <div class="plan-feat">5 voice options</div>
+      </div>
+    </div>
+
+    <div class="plan-card popular" onclick="selectPlan(this,'family')" id="plan-family">
+      <div class="plan-badge">Most Popular</div>
+      <div class="plan-name">Family</div>
+      <div class="plan-price">$19.99 <span>CAD / month</span></div>
+      <div class="plan-mins">450 min / month</div>
+      <div class="plan-features">
+        <div class="plan-feat">Up to 3 child profiles</div>
+        <div class="plan-feat">Multi-player role-play</div>
+        <div class="plan-feat">Advanced growth tracking</div>
+        <div class="plan-feat">All voice & personality options</div>
+        <div class="plan-feat">Story history & replay</div>
+      </div>
+    </div>
+
+    <div class="plan-card" onclick="selectPlan(this,'premium')" id="plan-premium">
+      <div class="plan-cur">Current</div>
+      <div class="plan-name">Premium</div>
+      <div class="plan-price">$29.99 <span>CAD / month</span></div>
+      <div class="plan-mins">Unlimited minutes</div>
+      <div class="plan-features">
+        <div class="plan-feat">Everything in Family</div>
+        <div class="plan-feat">Unlimited play time</div>
+        <div class="plan-feat">Custom story requests</div>
+        <div class="plan-feat">Priority AI response speed</div>
+        <div class="plan-feat">Early access to new features</div>
+      </div>
+    </div>
+
+    <button class="btn bp bfull">Subscribe / Change Plan</button>
+    <div style="font-size:12px;color:var(--t3);text-align:center">Cancel anytime · Billed monthly</div>
+  </div>
+</div>
+
+<!-- ════════ ADD MEMBER ════════ -->
+<div class="scr" id="s-add-member">
+  <div class="nav">
+    <h2 class="nav-title">Add Member</h2>
+  </div>
+  <div class="bd ctr">
+    <div class="rchoose-lbl">What kind of member?</div>
+    <div class="rcards">
+      <div class="rcard-c" onclick="go('s-reg-child')">
+        <div class="rccicon">👦</div>
+        <div class="rcctitle">Hero Child</div>
+        <div class="rccdesc">The main character — story language<br>level is tailored to them</div>
+      </div>
+      <div class="rcard-c" onclick="go('s-reg-comp')">
+        <div class="rccicon">👩</div>
+        <div class="rcctitle">Supporting Player</div>
+        <div class="rccdesc">Parents, siblings, or friends<br>join as side characters</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ REGISTER CHILD 1/3 ════════ -->
+<div class="scr" id="s-reg-child">
+  <div class="nav">
+    <h2 class="nav-title">Register Child</h2>
+    <span class="nav-step">1 / 3</span>
+  </div>
+  <div class="sprg"><div class="sbar" style="width:33%"></div></div>
+  <div class="bd">
+    <div class="fstitle">Basic Info</div>
+    <div class="flbl" style="margin-top:0">Profile Photo / Avatar</div>
+    <div class="photo-upload-box">
+      <div class="photo-uploader-card" id="reg-child-photo-card" onclick="triggerPhotoUpload('reg-child-file-input')">
+        <div class="photo-uploader-preview" id="reg-child-photo-preview">
+          <div class="pu-icon">📸</div>
+          <div class="pu-text">Take Photo or Choose Image</div>
+          <div class="pu-sub">Upload a real photo of the child</div>
+        </div>
+      </div>
+      <input type="file" id="reg-child-file-input" accept="image/*" capture="user" style="display:none" onchange="handlePhotoUpload(this, 'reg-child')">
+      <div id="reg-child-photo-remove" class="photo-remove-btn" style="display:none" onclick="removeUploadedPhoto('reg-child')">✕ Remove photo & use emoji instead</div>
+    </div>
+
+    <div class="or-divider">
+      <div class="or-divider-line"></div>
+      <div class="or-divider-text">Or choose an emoji</div>
+      <div class="or-divider-line"></div>
+    </div>
+
+    <div class="avrow" id="reg-child-avrow">
+      <div class="avpick active" onclick="selectEmojiFallback('reg-child', this)">👧</div>
+      <div class="avpick" onclick="selectEmojiFallback('reg-child', this)">👦</div>
+      <div class="avpick" onclick="selectEmojiFallback('reg-child', this)">🧒</div>
+      <div class="avpick" onclick="selectEmojiFallback('reg-child', this)">👶</div>
+      <div class="avpick" onclick="selectEmojiFallback('reg-child', this)">🌟</div>
+    </div>
+    <div class="flbl">Name / Nickname</div>
+    <input class="finput" id="reg-child-name" type="text" placeholder="e.g. Jiwoo, Alex, Yuna…"/>
+    <div class="flbl">Age</div>
+    <div class="stepper">
+      <button class="stbtn" onclick="stepAge(-1)">−</button>
+      <span class="stval" id="age-val">8</span>
+      <button class="stbtn" onclick="stepAge(1)">＋</button>
+    </div>
+    <div class="flbl">Native Language (Heritage)</div>
+    <select class="finput" id="reg-child-heritage">
+      <option>🇰🇷 Korean</option><option>🇯🇵 Japanese</option><option>🇨🇳 Chinese</option>
+      <option>🇪🇸 Spanish</option><option>🇫🇷 French</option><option>🇮🇳 Hindi</option>
+    </select>
+    <div class="flbl">Language of Daily Life (Environment)</div>
+    <select class="finput" id="reg-child-daily">
+      <option>🇺🇸 English</option><option>🇫🇷 French</option><option>🇩🇪 German</option>
+    </select>
+    <button class="btn bp bfull" onclick="go('s-reg-child2')">Next →</button>
+  </div>
+</div>
+
+<!-- ════════ REGISTER CHILD 2/3 ════════ -->
+<div class="scr" id="s-reg-child2">
+  <div class="nav">
+    <h2 class="nav-title">Register Child</h2>
+    <span class="nav-step">2 / 3</span>
+  </div>
+  <div class="sprg"><div class="sbar" style="width:66%"></div></div>
+  <div class="bd">
+    <div class="fstitle">Level & Interests</div>
+    <div class="flbl">Heritage Language Level</div>
+    <div class="pills" id="lvl-pills">
+      <div class="pill" onclick="pickPill(this,'lvl-pills','lvl-desc')">🌱 Understands basics</div>
+      <div class="pill" onclick="pickPill(this,'lvl-pills','lvl-desc')">🌿 Can hold simple conversations</div>
+      <div class="pill" onclick="pickPill(this,'lvl-pills','lvl-desc')">🌳 Converses but limited vocabulary</div>
+      <div class="pill" onclick="pickPill(this,'lvl-pills','lvl-desc')">🌟 Fluent but wants more depth</div>
+    </div>
+    <div class="pdesc" id="lvl-desc" style="color:var(--t3)">Select a language level above</div>
+
+    <div class="flbl" style="margin-top:16px">Interests (select multiple)</div>
+    <div class="igrid">
+      <div class="itag">🦕 Dinosaurs</div><div class="itag">🚀 Space</div>
+      <div class="itag">🧜 Fantasy</div><div class="itag">🎵 Music</div>
+      <div class="itag">⚽ Sports</div><div class="itag">🍕 Food</div>
+      <div class="itag">🐾 Animals</div><div class="itag">🤖 Robots</div>
+      <div class="itag">🎨 Art</div><div class="itag">🧪 Science</div>
+      <div class="itag">🧁 Baking</div><div class="itag">🌊 Ocean</div>
+      <div class="itag">🏯 History</div><div class="itag">🎮 Gaming</div>
+    </div>
+
+    <div class="flbl" style="margin-top:16px">Attention Span</div>
+    <div class="pills" id="span-pills">
+      <div class="pill" onclick="pickPill(this,'span-pills',null)">~5 min</div>
+      <div class="pill" onclick="pickPill(this,'span-pills',null)">~10 min</div>
+      <div class="pill" onclick="pickPill(this,'span-pills',null)">~20 min</div>
+      <div class="pill" onclick="pickPill(this,'span-pills',null)">30 min+</div>
+    </div>
+
+    <!-- NEW: Parent notes -->
+    <div class="flbl" style="margin-top:16px">Notes for AI <span style="font-weight:600;color:var(--t3);font-size:12px">(optional)</span></div>
+    <div class="fhint">Tell the AI anything about your child's personality, needs, or preferences.</div>
+    <textarea class="ftextarea" id="reg-child-notes" rows="4" placeholder="e.g. Jiwoo is a bit shy — please talk to her more proactively. She loves being praised. She gets easily distracted so keep the pace moving."></textarea>
+
+    <button class="btn bp bfull" onclick="go('s-reg-child3')">Next →</button>
+  </div>
+</div>
+
+<!-- ════════ REGISTER CHILD 3/3 Voice ════════ -->
+<div class="scr" id="s-reg-child3">
+  <div class="nav">
+    <h2 class="nav-title">Register Child</h2>
+    <span class="nav-step">3 / 3</span>
+  </div>
+  <div class="sprg"><div class="sbar" style="width:100%"></div></div>
+  <div class="bd ctr">
+    <div class="fstitle">Voice Registration</div>
+    <div class="vdesc">So AI knows who's speaking during play,<br>please record this child's voice sample.</div>
+    <div class="vscript">
+      <div class="vscript-lbl">Read this sentence clearly</div>
+      <div class="vscript-txt">"Hi! I'm ready for a magical adventure today!"</div>
+    </div>
+    <div class="recarea">
+      <button class="recbtn" id="rec-child" onclick="toggleRec('child')">🎙️</button>
+      <div class="recst" id="rs-child">Tap and speak</div>
+      <div class="waveform" id="wf-child"></div>
+    </div>
+    <div id="vs-child" style="display:none;width:100%">
+      <div class="vsample"><span>🎵 Sample 1</span><span class="vscheck">✓</span></div>
+    </div>
+    <div class="vtip">💡 Speak in a quiet room · No headphones needed</div>
+    <button class="btn bo bfull" onclick="finishAddChild()">Skip for Now</button>
+    <button class="btn bp bfull" onclick="finishAddChild()">Complete Registration ✓</button>
+  </div>
+</div>
+
+<!-- ════════ REGISTER COMPANION ════════ -->
+<div class="scr" id="s-reg-comp">
+  <div class="nav">
+    <h2 class="nav-title">Register Supporter</h2>
+    <span class="nav-step">1 / 2</span>
+  </div>
+  <div class="sprg"><div class="sbar" style="width:50%"></div></div>
+  <div class="bd">
+    <div class="fstitle">Basic Info</div>
+    <div class="flbl" style="margin-top:0">Profile Photo / Avatar</div>
+    <div class="photo-upload-box">
+      <div class="photo-uploader-card" id="reg-comp-photo-card" onclick="triggerPhotoUpload('reg-comp-file-input')">
+        <div class="photo-uploader-preview" id="reg-comp-photo-preview">
+          <div class="pu-icon">📸</div>
+          <div class="pu-text">Take Photo or Choose Image</div>
+          <div class="pu-sub">Upload a real photo of the supporter</div>
+        </div>
+      </div>
+      <input type="file" id="reg-comp-file-input" accept="image/*" capture="user" style="display:none" onchange="handlePhotoUpload(this, 'reg-comp')">
+      <div id="reg-comp-photo-remove" class="photo-remove-btn" style="display:none" onclick="removeUploadedPhoto('reg-comp')">✕ Remove photo & use emoji instead</div>
+    </div>
+
+    <div class="or-divider">
+      <div class="or-divider-line"></div>
+      <div class="or-divider-text">Or choose an emoji</div>
+      <div class="or-divider-line"></div>
+    </div>
+
+    <div class="avrow" id="reg-comp-avrow">
+      <div class="avpick active" onclick="selectEmojiFallback('reg-comp', this)">👩</div>
+      <div class="avpick" onclick="selectEmojiFallback('reg-comp', this)">👨</div>
+      <div class="avpick" onclick="selectEmojiFallback('reg-comp', this)">👵</div>
+      <div class="avpick" onclick="selectEmojiFallback('reg-comp', this)">👴</div>
+      <div class="avpick" onclick="selectEmojiFallback('reg-comp', this)">🧑</div>
+      <div class="avpick" onclick="selectEmojiFallback('reg-comp', this)">🌟</div>
+      <div class="avpick" onclick="selectEmojiFallback('reg-comp', this)">🧸</div>
+    </div>
+    <div class="flbl">Name</div>
+    <input class="finput" id="reg-comp-name" type="text" placeholder="e.g. Sarah, David, Grandma Yoon, Minjun…"/>
+    <div class="flbl">Relationship</div>
+    <div class="pills" id="rel-pills">
+      <div class="pill active" onclick="pickRelPill(this,'Mom')">👩 Mom</div>
+      <div class="pill" onclick="pickRelPill(this,'Dad')">👨 Dad</div>
+      <div class="pill" onclick="pickRelPill(this,'Grandma')">👵 Grandma</div>
+      <div class="pill" onclick="pickRelPill(this,'Grandpa')">👴 Grandpa</div>
+      <div class="pill" onclick="pickRelPill(this,'Sibling')">👦 Sibling</div>
+      <div class="pill" onclick="pickRelPill(this,'Friend')">👫 Friend</div>
+      <div class="pill" onclick="pickRelPill(this,'Other')">🌟 Other</div>
+    </div>
+    <div id="rel-other-box" style="display:none;margin-top:10px">
+      <div class="flbl">Specify Custom Relationship</div>
+      <input class="finput" id="reg-comp-other-val" type="text" placeholder="e.g. Aunt, Babysitter, Korean Tutor, Cousin…"/>
+    </div>
+    <button class="btn bp bfull" onclick="finishAddSupporter()">Complete Registration ✓</button>
+    <button class="btn bo bfull" style="margin-top:8px" onclick="go('s-reg-comp2')">Next: Voice Sample →</button>
+  </div>
+</div>
+
+<!-- ════════ REGISTER COMPANION VOICE ════════ -->
+<div class="scr" id="s-reg-comp2">
+  <div class="nav">
+    <h2 class="nav-title">Register Supporter</h2>
+    <span class="nav-step">2 / 2</span>
+  </div>
+  <div class="sprg"><div class="sbar" style="width:100%"></div></div>
+  <div class="bd ctr">
+    <div class="fstitle">Voice Registration</div>
+    <div class="vscript">
+      <div class="vscript-lbl">Read this sentence</div>
+      <div class="vscript-txt">"Let's go on an amazing adventure together!"</div>
+    </div>
+    <div class="recarea">
+      <button class="recbtn" id="rec-comp" onclick="toggleRec('comp')">🎙️</button>
+      <div class="recst" id="rs-comp">Tap and speak</div>
+      <div class="waveform" id="wf-comp"></div>
+    </div>
+    <button class="btn bo bfull" onclick="finishAddSupporter()">Skip for Now</button>
+    <button class="btn bp bfull" onclick="finishAddSupporter()">Complete ✓</button>
+  </div>
+</div>
+
+<!-- ════════ DONE ════════ -->
+<div class="scr" id="s-done">
+  <div class="bd ctr fctr" style="padding-top:40px;padding-bottom:40px">
+    <div class="doneicon">🎉</div>
+    <div class="donetitle">All Set!</div>
+    <div class="donedesc">Member registered successfully.<br>Ready to start the adventure!</div>
+    <div style="display:flex;flex-direction:column;gap:10px;width:100%;max-width:280px;margin-top:28px">
+      <button class="btn bp blg" onclick="go('s-ns1')">Start New Adventure</button>
+      <button class="btn bo blg" onclick="go('s-home')">Go Home</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ UNIFIED MEMBER PROFILE & EDIT ════════ -->
+<div class="scr" id="s-edit-member">
+  <div class="nav">
+    <h2 class="nav-title" id="pm-nav-title">Profile</h2>
+  </div>
+  <div class="bd">
+    <div class="phero">
+      <div class="pbig" id="pm-avatar" style="overflow:hidden"></div>
+      <div class="pname" id="pm-name">Member Name</div>
+      <div class="pbadge" id="pm-badge">Role</div>
+    </div>
+    <div class="pstats" id="pm-stats-row">
+      <div class="pstat"><div class="pstatv" id="pm-stat-adv">12</div><div class="pstatl">Adventures</div></div>
+      <div class="pstat"><div class="pstatv" id="pm-stat-phr">147</div><div class="pstatl">Phrases Used</div></div>
+      <div class="pstat"><div class="pstatv" id="pm-stat-time">4.8h</div><div class="pstatl">Total Time</div></div>
+    </div>
+    <div class="slbl">Info</div>
+    <div class="slist" id="pm-info-list">
+      <!-- Dynamic info rows -->
+    </div>
+    <div id="pm-interests-section">
+      <div class="slbl">Interests</div>
+      <div class="igrid" id="pm-interests-grid" style="pointer-events:none">
+      </div>
+    </div>
+    <div id="pm-notes-section">
+      <div class="slbl">AI Notes from Parent</div>
+      <div id="pm-notes-text" style="background:var(--card);border:1px solid var(--bdr);border-radius:var(--r2);padding:14px;font-size:13px;color:var(--t2);line-height:1.6">
+      </div>
+    </div>
+    <div class="slbl">Voice</div>
+    <div class="vsr"><span>🎙️ Voice sample registered</span><button class="btn bo bsm" onclick="go('s-reg-child3')">Re-record</button></div>
+    <button class="btn bdanger bfull" style="margin-top:16px" onclick="removeCurrentMember()">Remove Member</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+  NEW SESSION FLOW
+═══════════════════════════════════ -->
+
+<!-- NS 1/5 — Participants -->
+
+<!-- ──────── MINIMAL LOADING SCREEN ──────── -->
+<div class="scr" id="s-loading">
+  <div class="bd" style="display:flex;align-items:center;justify-content:center;height:100%;min-height:550px">
+    <div class="minimal-spinner"></div>
+  </div>
+</div>
+
+<div class="scr" id="s-ns1">
+  <div class="nav">
+    <h2 class="nav-title">New Adventure</h2>
+    <span class="nav-step">1 / 5</span>
+  </div>
+  <div class="sprg"><div class="sbar" style="width:20%"></div></div>
+  <div class="bd">
+    <div class="fstitle">Who's joining today?</div>
+
+    <!-- Children -->
+    <div class="slbl">Children <span class="req">At least 1</span></div>
+    <div id="ns1-children-list" style="display:flex;flex-direction:column;gap:8px"></div>
+
+    <!-- Level selector: shown when 2+ children selected -->
+    <div id="multi-level-box" style="display:none;background:#F8F9FF;border:1px solid var(--bdr);border-radius:var(--r2);padding:14px;flex-direction:column;gap:10px">
+      <div style="font-size:13px;font-weight:800;color:var(--t2)">📚 Language Level for This Session</div>
+      <div style="font-size:12px;color:var(--t3)">Different levels selected — choose session difficulty:</div>
+      <div class="fpills">
+        <div class="fpill" onclick="pickFilter(this)">🌱 Beginner</div>
+        <div class="fpill active" onclick="pickFilter(this)">🌿 Conversational</div>
+        <div class="fpill" onclick="pickFilter(this)">🌳 Intermediate</div>
+      </div>
+    </div>
+
+    <!-- Single child note: shown when 1 child selected -->
+    <div id="single-level-note" style="display:none;background:#EDF9F8;border:1px solid #c8f0ed;border-radius:var(--r2);padding:12px;font-size:13px;color:#1a6b65;font-weight:600;align-items:center;gap:8px">
+      <span style="font-size:18px">✔️</span>
+      <span>Using <span id="single-child-name">Jiwoo</span>'s saved settings · <span id="single-child-level">🌿 Conversational</span> · interests matched</span>
+    </div>
+
+    <!-- Supporting Players -->
+    <div class="slbl" style="margin-top:8px">Supporting Players <span class="req">At least 1</span></div>
+    <div id="ns1-adults-list" style="display:flex;flex-direction:column;gap:8px"></div>
+
+    <button class="btn bo bfull" onclick="go('s-add-member')">+ Add New Member</button>
+    <button class="btn bp bfull" id="ns1-next" onclick="goNs2()">Next →</button>
+  </div>
+</div>
+
+<!-- NS 2/5 — World -->
+<div class="scr" id="s-ns2">
+  <div class="nav">
+    <h2 class="nav-title">New Adventure</h2>
+    <span class="nav-step">2 / 5</span>
+  </div>
+  <div class="sprg"><div class="sbar" style="width:40%"></div></div>
+  <div class="bd">
+    <div class="fstitle">Which world today?</div>
+    <div class="slbl" id="ns2-lbl">✨ AI Picks — merged for Jiwoo & Somi</div>
+    <div id="ns2-note" style="background:#F8F5FF;border:1px solid #ddd8ff;border-radius:var(--r1);padding:9px 12px;font-size:12px;color:#5a4a8a;line-height:1.6;margin-bottom:4px">
+      Jiwoo loves 🦕 Dinos · 🧜 Fantasy · 🐾 Animals &nbsp;&middot;&nbsp; Somi loves 🚀 Space · 🍓 Fruits · 🧚 Fairies · 🐱 Cats<br>
+      💡 <strong>Common ground:</strong> magical creatures, colorful space & picnic adventures, gentle stories
+    </div>
+    <div class="tscroll" id="ns2-themes">
+      <div class="tc aipick sel" onclick="pickTheme(this)">
+        <div class="tcemoji">🧚🦕</div>
+        <div class="tcname">Fairy Dino Forest</div>
+        <div class="tcdesc">Where fairies ride tiny dinos through rainbow trees</div>
+        <div class="tclvl">Conversational 🌿</div>
+      </div>
+      <div class="tc" onclick="pickTheme(this)">
+        <div class="tcemoji">🐱🌈</div>
+        <div class="tcname">Rainbow Cat Kingdom</div>
+        <div class="tcdesc">Magical cats who paint the sky with their tails</div>
+        <div class="tclvl">Beginner 🌱</div>
+      </div>
+      <div class="tc" onclick="pickTheme(this)">
+        <div class="tcemoji">🎪🐾</div>
+        <div class="tcname">The Magical Animal Circus</div>
+        <div class="tcdesc">A secret circus where every animal has a superpower</div>
+        <div class="tclvl">Conversational 🌿</div>
+      </div>
+      <div class="tc" onclick="pickTheme(this)">
+        <div class="tcemoji">🦕🌟</div>
+        <div class="tcname">Stardust Dino Valley</div>
+        <div class="tcdesc">Dinos that glow and grant wishes under the stars</div>
+        <div class="tclvl">Conversational 🌿</div>
+      </div>
+      <div class="tc" onclick="pickTheme(this)">
+        <div class="tcemoji">🐾🧚</div>
+        <div class="tcname">Enchanted Animal Town</div>
+        <div class="tcdesc">Run a magical vet clinic with fairy helpers</div>
+        <div class="tclvl">Intermediate 🌳</div>
+      </div>
+    </div>
+    <div class="slbl" style="margin-top:14px">Your own idea</div>
+    <div class="ctheme">
+      <input class="finput" id="custom-input" type="text" placeholder="e.g. A haunted candy factory…"/>
+      <button class="btn bo bsm" onclick="genCustom()">AI Create</button>
+    </div>
+    <button class="btn bp bfull" onclick="goNs3()">Next →</button>
+  </div>
+</div>
+
+<!-- NS 3/5 — Story + Roles -->
+<div class="scr" id="s-ns3">
+  <div class="nav">
+    <h2 class="nav-title">New Adventure</h2>
+    <span class="nav-step">3 / 5</span>
+  </div>
+  <div class="sprg"><div class="sbar" style="width:60%"></div></div>
+  <div class="bd">
+    <div class="fstitle">Your Story is Ready</div>
+    <div class="story-flip-container" id="story-flip-container" onclick="toggleStoryCardFlip()">
+      <div class="story-flip-inner" id="story-flip-inner">
+        
+        <!-- FRONT SIDE: Pure Art & Subtle Fancy Flip Pill -->
+        <div class="story-card-front" id="story-card-front">
+          <div class="sc-front-badge" id="ns3-front-badge">Packing for a Moon Picnic</div>
+          <div class="sc-front-footer">
+            <div class="sc-fancy-token">
+              <span class="sc-token-icon">✦</span>
+              <span>Storyline</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- BACK SIDE: Storyline, Plot & Roles Summary -->
+        <div class="story-card-back" id="story-card-back">
+          <div>
+            <div class="sc-back-header">
+              <div class="swbadge" id="ns3-badge" style="margin-bottom:0">Packing for a Moon Picnic</div>
+              <div class="sc-flipback-btn">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                  <circle cx="8.5" cy="8.5" r="1.5"/>
+                  <polyline points="21 15 16 10 5 21"/>
+                </svg>
+                <span>Artwork</span>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+                </svg>
+              </div>
+            </div>
+            <div class="stitle" id="ns3-title" style="margin-top:8px">Packing for a Moon Picnic</div>
+            <div class="sbody" id="ns3-body">
+              On a beautiful sunny day, <strong>Somi</strong> and mother are astronauts preparing for a picnic on the moon. <strong>Coco</strong> the moon rabbit will meet them at the picnic site with delicious treats!
+            </div>
+          </div>
+          <div>
+            <div class="stags" id="ns3-tags" style="margin-top:10px">
+              <div class="stag">Space</div>
+              <div class="stag">Picnic</div>
+              <div class="stag">Family</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="slbl" style="margin-top:14px">Your own idea</div>
+    <div class="ctheme">
+      <input class="finput" id="custom-story-input" type="text" placeholder="e.g. Find a secret recipe on the moon…"/>
+      <button class="btn bo bsm" id="btn-custom-story" onclick="genCustomStory()">AI Create</button>
+    </div>
+
+    <div class="fstitle" style="font-size:22px;margin-top:16px">Role Assignment</div>
+    <div id="ns3-roles" style="display:flex;flex-direction:column;gap:10px">
+      <!-- Dynamically rendered -->
+    </div>
+    <button class="btn bp bfull" onclick="goNs4()">Next →</button>
+  </div>
+</div>
+
+<!-- NS 4/5 — AI Voice & Personality -->
+<div class="scr" id="s-ns4">
+  <div class="nav">
+    <h2 class="nav-title">New Adventure</h2>
+    <span class="nav-step">4 / 5</span>
+  </div>
+  <div class="sprg"><div class="sbar" style="width:80%"></div></div>
+  <div class="bd">
+    <div class="fstitle" id="ns4-title">Choose Voice Style</div>
+    <div class="fhint" id="ns4-hint" style="margin-bottom:4px">Pick the voice style for your AI companion · You can change this anytime.</div>
+
+    <div class="slbl">Voice Style</div>
+    <div class="vc-grid">
+      <div class="vc" onclick="pickVC(this)">
+        <div class="vc-icon" style="background:#FFF0E8;color:#FF6B35">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3v18M17 6v12M7 8v8M22 10v4M2 10v4"/>
+          </svg>
+        </div>
+        <div class="vc-name">Warm & Gentle</div>
+        <div class="vc-desc">Soft, reassuring, cozy tone</div>
+        <div class="vc-preview">"Hello, little one…"</div>
+      </div>
+
+      <div class="vc" onclick="pickVC(this)">
+        <div class="vc-icon" style="background:#EBF5FF;color:#2B88D9">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 12h3l3-7 4 14 3-7h3"/>
+          </svg>
+        </div>
+        <div class="vc-name">Bold & Energetic</div>
+        <div class="vc-desc">Lively, cheerful, action-packed</div>
+        <div class="vc-preview">"Let's go, team!"</div>
+      </div>
+
+      <div class="vc" onclick="pickVC(this)">
+        <div class="vc-icon" style="background:#FEF9E7;color:#D4AC0D">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/>
+            <path d="M8 13a4 4 0 0 0 8 0"/>
+            <circle cx="9" cy="9" r="1" fill="currentColor"/>
+            <circle cx="15" cy="9" r="1" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="vc-name">Playful & Cheerful</div>
+        <div class="vc-desc">Bouncy, friendly, joyful vibes</div>
+        <div class="vc-preview">"Ready for fun!"</div>
+      </div>
+
+      <div class="vc" onclick="pickVC(this)">
+        <div class="vc-icon" style="background:#F4F0FF;color:#7C4DFF">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 12c4-8 8 8 12 0s8 8 8 0"/>
+          </svg>
+        </div>
+        <div class="vc-name">Dramatic Storyteller</div>
+        <div class="vc-desc">Expressive, suspenseful, rich</div>
+        <div class="vc-preview">"The journey begins…"</div>
+      </div>
+
+      <div class="vc" onclick="pickVC(this)">
+        <div class="vc-icon" style="background:#EAFBF5;color:#00B894">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 7v5l3 3"/>
+          </svg>
+        </div>
+        <div class="vc-name">Calm & Thoughtful</div>
+        <div class="vc-desc">Slow, peaceful, guiding questions</div>
+        <div class="vc-preview">"Long, long ago…"</div>
+      </div>
+
+      <div class="vc" onclick="pickVC(this)">
+        <div class="vc-icon" style="background:#F0F3F6;color:#576574">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+          </svg>
+        </div>
+        <div class="vc-name">Cool & Adventurous</div>
+        <div class="vc-desc">Clear, confident, steady tone</div>
+        <div class="vc-preview">"Let's explore together."</div>
+      </div>
+    </div>
+
+    <div class="slbl" style="margin-top:16px">Personality Delivery</div>
+    <div class="prs-grid">
+      <div class="prs" onclick="pickPRS(this)">
+        <div class="prs-icon" style="background:#FFF0E8;color:#FF6B35">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+        </div>
+        <div class="prs-info">
+          <div class="prs-name">Encouraging</div>
+          <div class="prs-desc">Warm praise & supportive prompts</div>
+        </div>
+      </div>
+
+      <div class="prs" onclick="pickPRS(this)">
+        <div class="prs-icon" style="background:#F4F0FF;color:#7C4DFF">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+            <path d="M9 9h.01M15 9h.01M9 15h6"/>
+          </svg>
+        </div>
+        <div class="prs-info">
+          <div class="prs-name">Story-focused</div>
+          <div class="prs-desc">Immersive narrative & suspense</div>
+        </div>
+      </div>
+
+      <div class="prs" onclick="pickPRS(this)">
+        <div class="prs-icon" style="background:#FEF9E7;color:#D4AC0D">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <div class="prs-info">
+          <div class="prs-name">Playful</div>
+          <div class="prs-desc">Engaging sound effects & humor</div>
+        </div>
+      </div>
+
+      <div class="prs" onclick="pickPRS(this)">
+        <div class="prs-icon" style="background:#EAFBF5;color:#00B894">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="16" x2="12" y2="12"/>
+            <line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+        </div>
+        <div class="prs-info">
+          <div class="prs-name">Thoughtful</div>
+          <div class="prs-desc">Thought-provoking questions</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn bp bfull" id="ns4-next" style="opacity:0.45" disabled onclick="goNs5()">Select a Voice Style</button>
+  </div>
+</div>
+
+<!-- NS 5/5 — Launch -->
+<div class="scr" id="s-ns5">
+  <div class="nav">
+    <h2 class="nav-title">New Adventure</h2>
+    <span class="nav-step">5 / 5</span>
+  </div>
+  <div class="sprg"><div class="sbar" style="width:100%"></div></div>
+  <div class="bd ctr">
+    <div class="fstitle">Ready for Launch</div>
+
+    <div class="ls">
+      <div class="lsrow"><span class="lslbl">World</span><span class="lsval" id="launch-val-world">Packing for a Moon Picnic</span></div>
+      <div class="lsrow"><span class="lslbl">Story</span><span class="lsval" id="launch-val-story">Packing for a Moon Picnic</span></div>
+      <div class="lsrow"><span class="lslbl">Language</span><span class="lsval" id="launch-val-lang">Korean</span></div>
+      <div class="lsrow"><span class="lslbl">AI Character</span><span class="lsval" id="launch-val-ai">Coco (Moon Rabbit)</span></div>
+      <div class="lsrow"><span class="lslbl">Players</span><span class="lsval" id="launch-val-players">Somi & Mom</span></div>
+    </div>
+
+    <div class="slist" style="width:100%">
+      <div class="srow">
+        <span>Save Transcript to History</span>
+        <div class="tgl on" id="tgl-transcript" onclick="toggleTranscript(this)"><div class="knob"></div></div>
+      </div>
+    </div>
+    <div id="transcript-info-box" style="display:none;background:#FFF7ED;border:1px solid #FFEDD5;border-radius:10px;padding:11px 13px;margin-top:8px;text-align:left;width:100%;box-sizing:border-box">
+      <div style="display:flex;align-items:flex-start;gap:8px">
+        <span style="font-size:15px;line-height:1.2;color:#EA580C;font-weight:700">ⓘ</span>
+        <div style="font-size:12px;color:#9A3412;line-height:1.55">
+          If you disable recording, the session conversation log will not be saved and language growth insights cannot be tracked.
+        </div>
+      </div>
+    </div>
+
+    <button class="btn bp bfull bxl lbtn" onclick="go('s-connect')">Connect Device</button>
+    <div style="font-size:12px;color:var(--t3)">Prepares story module for your physical toy device</div>
+  </div>
+</div>
+
+<!-- ════════ DEVICE CONNECTION SCREEN ════════ -->
+<div class="scr" id="s-connect">
+  <div class="nav">
+    <h2 class="nav-title">Connect Device</h2>
+  </div>
+  <div class="bd ctr fctr" style="gap:20px;padding:24px 20px">
+    <div class="fancy-radar-container">
+      <div class="radar-ring radar-ring-1" id="radar-ring-1"></div>
+      <div class="radar-ring radar-ring-2" id="radar-ring-2"></div>
+      <div class="radar-ring radar-ring-3" id="radar-ring-3"></div>
+      <div class="orbit-particle" id="orbit-p"></div>
+      
+      <div class="fancy-core-orb" id="fancy-core-orb">
+        <div class="fancy-radar-icon" id="fancy-radar-icon">
+          <!-- Sleek IoT Wireless Wave SVG -->
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#FF6B35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a10 10 0 0 1 10 10"/>
+            <path d="M12 6a6 6 0 0 1 6 6"/>
+            <path d="M12 10a2 2 0 0 1 2 2"/>
+            <path d="M12 22a10 10 0 0 1-10-10"/>
+            <path d="M12 18a6 6 0 0 1-6-6"/>
+            <path d="M12 14a2 2 0 0 1-2-2"/>
+            <circle cx="12" cy="12" r="1.5" fill="#FF6B35"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center">
+      <div style="font-family:'Fredoka One',cursive;font-size:24px;color:var(--t1);line-height:1.3">
+        Turn On Your Device
+      </div>
+      <div style="font-size:13.5px;color:var(--t2);margin-top:8px;line-height:1.6;max-width:290px;margin-left:auto;margin-right:auto">
+        Please turn on your physical toy device and keep your phone close by.
+      </div>
+    </div>
+
+    <div class="conn-status-card" id="conn-status-card" style="transition:all .35s ease;background:#FFF0F0;border-color:#FFCDD2">
+      <div class="conn-dot" id="conn-dot" style="background:#E74C3C"></div>
+      <div id="conn-status-text" style="font-size:13px;font-weight:800;color:#C0392B">Searching & Connecting...</div>
+    </div>
+
+    <button class="btn bp bfull bxl" id="conn-start-btn" style="font-size:18px;padding:18px;margin-top:6px;opacity:0.45;transition:all .3s ease" disabled onclick="startPlaySession()">
+      Start Adventure
+    </button>
+  </div>
+</div>
+
+<!-- ──────── ROLEPLAY LIVE MONITOR (Parent Screen) ──────── -->
+<div class="scr" id="s-roleplay" style="background:#0D0D1A;color:#fff">
+  <div class="rptop">
+    <button class="rpx" onclick="endSession()" title="Exit">✕</button>
+    <div class="rptitle" id="live-scene-title">Packing for a Moon Picnic</div>
+    <div class="rptimer" id="rp-timer">20:00</div>
+  </div>
+
+  <div class="bd" style="display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:36px 24px 28px;height:calc(100% - 56px);text-align:center;box-sizing:border-box">
+    <!-- Center visual & text -->
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;max-width:320px;margin:0 auto;text-align:center">
+      
+      <!-- Pulsing Mic Icon -->
+      <div class="connect-circle-wrapper" style="margin-bottom:14px">
+        <div class="connect-pulse" style="border-color:rgba(255,107,53,0.4)"></div>
+        <div class="connect-circle" style="background:linear-gradient(135deg,#FF6B35,#FF8E53);box-shadow:0 12px 32px rgba(255,107,53,0.45);width:96px;height:96px">
+          <span style="font-size:46px">🎙️</span>
+        </div>
+      </div>
+
+      <!-- Live Voice Wave -->
+      <div class="live-wave-area" style="margin-bottom:24px">
+        <div class="live-wave-bar" style="animation-delay:.1s"></div>
+        <div class="live-wave-bar" style="animation-delay:.3s"></div>
+        <div class="live-wave-bar" style="animation-delay:.5s"></div>
+        <div class="live-wave-bar" style="animation-delay:.2s"></div>
+        <div class="live-wave-bar" style="animation-delay:.4s"></div>
+        <div class="live-wave-bar" style="animation-delay:.15s"></div>
+        <div class="live-wave-bar" style="animation-delay:.35s"></div>
+      </div>
+
+      <!-- Status Title & Clean Subtitle -->
+      <div style="font-size:22px;font-weight:800;color:#fff;margin-bottom:12px;line-height:1.3;text-align:center" id="live-speaker-name">
+        Live Adventure in Progress
+      </div>
+      <div style="font-size:14px;color:rgba(255,255,255,0.72);line-height:1.6;text-align:center;max-width:260px;margin:0 auto">
+        Speak freely with your AI companion<br>through the plush toy device.
+      </div>
+    </div>
+
+    <!-- Bottom End Session Button -->
+    <div style="width:100%;max-width:340px;margin:0 auto;text-align:center">
+      <button class="btn bdanger bfull bxl" style="padding:18px;font-size:16px;font-weight:800;border-radius:var(--r2);box-shadow:0 8px 24px rgba(231,76,60,0.3)" onclick="endSession()">
+        End Session
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ PAUSE ════════ -->
+<div class="scr" id="s-pause">
+  <div class="nav">
+    <h2 class="nav-title">Paused</h2>
+  </div>
+  <div class="bd ctr" style="margin-top:12px">
+    <div class="popts">
+      <button class="pbtn" onclick="go('s-roleplay')">▶️ Continue Adventure</button>
+      <button class="pbtn" onclick="go('s-roleplay')">🔄 Regenerate Story Direction</button>
+      <button class="pbtn" onclick="go('s-roleplay')">🎭 Change AI Personality</button>
+      <button class="pbtn" onclick="go('s-roleplay')">👁 Toggle Parent Hints</button>
+      <button class="pbtn danger" onclick="endSession()">🚪 End Session</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ SUMMARY BEST ⭐⭐⭐ ════════ -->
+<div class="scr" id="s-summary-best">
+  <div class="nav">
+    <h2 class="nav-title">Session Log</h2>
+  </div>
+  <div class="bd">
+    <div class="sumhero">
+      <div class="sumworld">🌕 Packing for a Moon Picnic</div>
+      <div class="sumtitle">Packing for a Moon Picnic</div>
+      <div class="sumparts">Somi (Astronaut choosing food) · Mom (Astronaut teammate) · Coco (Moon Rabbit) · 4 min 20 sec</div>
+      <div class="overall-stars">⭐⭐⭐</div>
+    </div>
+
+    <div class="slbl">Score Breakdown</div>
+    <div class="score-bkdn">
+      <div class="sbrow"><div class="sblbl">Phrases Spoken</div><div class="sbval good">9</div></div>
+      <div class="sbrow"><div class="sblbl">Heritage Language Usage</div><div class="sbval good">92%</div></div>
+      <div class="sbrow"><div class="sblbl">Language Growth Moment</div><div class="sbval good">strawberry → 딸기 · 녹이다/찍다 (Melt/Dip) 어휘 확장 ✓</div></div>
+      <div class="sbrow"><div class="sblbl">Creativity & Interaction</div><div class="sbval good">Excellent ✦✦✦</div></div>
+      <div class="sbrow"><div class="sblbl">Engagement</div><div class="sbval good">98%</div></div>
+      <div class="sbrow"><div class="sblbl">Story Completion</div><div class="sbval good">Moon Picnic packed & ready ✓</div></div>
+    </div>
+
+    <div class="slbl">Full Session Log</div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+
+      <div class="rlog-sys">Session started · Just now · Korean 🇰🇷</div>
+
+      <!-- 1. Coco (EduAI - Left) -->
+      <div class="rlog-bbl rlog-ai">
+        <div class="rlog-av" style="background:#F0EEFF">🐰</div>
+        <div class="rlog-cont">
+          <div class="rlog-who">Coco (EduAI)</div>
+          <div class="rlog-txt">"소미야, 달에 거의 다 왔어? 내가 벌써 소풍 돗자리를 깔아놨지!"</div>
+        </div>
+      </div>
+
+      <!-- 2. Mom (Supporter - Right) -->
+      <div class="rlog-bbl rlog-comp rlog-right">
+        <div class="rlog-av" style="overflow:hidden"><img src="mom.jpg" alt="Mom"></div>
+        <div class="rlog-cont rlog-r">
+          <div class="rlog-who r">Mom</div>
+          <div class="rlog-txt">"우리 지금 음식 챙기고 있어. 소미는 뭐 가져가고 싶어?"</div>
+        </div>
+      </div>
+
+      <!-- 3. Somi (Child - Right) -->
+      <div class="rlog-bbl rlog-child rlog-right">
+        <div class="rlog-av" style="overflow:hidden"><img src="somi.jpg" alt="Somi"></div>
+        <div class="rlog-cont rlog-r">
+          <div class="rlog-who r">Somi</div>
+          <div class="rlog-txt">"음... 나 <strong>strawberry</strong> 가져갈래, 그리고... 마시멜로."</div>
+        </div>
+      </div>
+
+      <!-- 4. Coco (EduAI - Left) -->
+      <div class="rlog-bbl rlog-ai">
+        <div class="rlog-av" style="background:#F0EEFF">🐰</div>
+        <div class="rlog-cont">
+          <div class="rlog-who">Coco (EduAI)</div>
+          <div class="rlog-txt">"<strong>딸기</strong> 좋다! 딸기랑 마시멜로를 가져오고 싶구나. 나도 딸기와 마시멜로를 아주 좋아해!"</div>
+        </div>
+      </div>
+
+      <!-- 5. Somi (Child - Right) -->
+      <div class="rlog-bbl rlog-child rlog-right">
+        <div class="rlog-av" style="overflow:hidden"><img src="somi.jpg" alt="Somi"></div>
+        <div class="rlog-cont rlog-r">
+          <div class="rlog-who r">Somi</div>
+          <div class="rlog-txt">"응! 딸기랑 마시멜로 가져갈래. 달나라에선 딸기랑 마시멜로로 뭘 만들어 먹을까?"</div>
+        </div>
+      </div>
+
+      <!-- 6. Mom (Supporter - Right: Hesitating) -->
+      <div class="rlog-bbl rlog-comp rlog-right">
+        <div class="rlog-av" style="overflow:hidden"><img src="mom.jpg" alt="Mom"></div>
+        <div class="rlog-cont rlog-r">
+          <div class="rlog-who r">Mom</div>
+          <div class="rlog-txt">"음....."</div>
+        </div>
+      </div>
+
+      <!-- 7. Coco (EduAI - Left: Steps in with creative Moonlight Fondue idea) -->
+      <div class="rlog-bbl rlog-ai">
+        <div class="rlog-av" style="background:#F0EEFF">🐰</div>
+        <div class="rlog-cont">
+          <div class="rlog-who">Coco (EduAI)</div>
+          <div class="rlog-txt">"내가 달나라 특제 디저트를 만들어 줄게! 바로 <strong>'달빛 퐁듀'</strong>야! 따뜻하게 <strong>녹인</strong> 마시멜로에 상큼한 딸기를 콕 <strong>찍어</strong> 먹는 거지!"</div>
+        </div>
+      </div>
+
+      <!-- 8. Somi (Child - Right) -->
+      <div class="rlog-bbl rlog-child rlog-right">
+        <div class="rlog-av" style="overflow:hidden"><img src="somi.jpg" alt="Somi"></div>
+        <div class="rlog-cont rlog-r">
+          <div class="rlog-who r">Somi</div>
+          <div class="rlog-txt">"와, 달빛 퐁듀! 진짜 맛있겠다! 달나라에서 먹으면 무슨 맛일까?"</div>
+        </div>
+      </div>
+
+      <!-- 9. Coco (EduAI - Left) -->
+      <div class="rlog-bbl rlog-ai">
+        <div class="rlog-av" style="background:#F0EEFF">🐰</div>
+        <div class="rlog-cont">
+          <div class="rlog-who">Coco (EduAI)</div>
+          <div class="rlog-txt">"별가루를 살살 뿌린 것처럼 더 달콤하고 사르르 녹을 거야!"</div>
+        </div>
+      </div>
+
+      <!-- 10. Mom (Supporter - Right) -->
+      <div class="rlog-bbl rlog-comp rlog-right">
+        <div class="rlog-av" style="overflow:hidden"><img src="mom.jpg" alt="Mom"></div>
+        <div class="rlog-cont rlog-r">
+          <div class="rlog-who r">Mom</div>
+          <div class="rlog-txt">"우와, 들으니 엄마도 먹어보고 싶네! 그럼 소미야, 우리 달빛 퐁듀 만들 준비를 해볼까?"</div>
+        </div>
+      </div>
+
+      <!-- 11. Somi (Child - Right) -->
+      <div class="rlog-bbl rlog-child rlog-right">
+        <div class="rlog-av" style="overflow:hidden"><img src="somi.jpg" alt="Somi"></div>
+        <div class="rlog-cont rlog-r">
+          <div class="rlog-who r">Somi</div>
+          <div class="rlog-txt">"응, 좋아요!"</div>
+        </div>
+      </div>
+
+      <div class="rlog-sys">Session ended · 4 min 20 sec · Picnic preparations complete ✓</div>
+    </div>
+
+    <div class="slbl">Vocabulary & Expressions Learned</div>
+    <div class="lwords">
+      <div class="lword">딸기 (strawberry)</div>
+      <div class="lword">마시멜로 (marshmallow)</div>
+      <div class="lword">달빛 퐁듀 (fondue)</div>
+      <div class="lword">녹이다 (melt)</div>
+      <div class="lword">찍어 먹다 (dip & eat)</div>
+      <div class="lword">소풍 돗자리 (picnic blanket)</div>
+      <div class="lword">별가루 (stardust)</div>
+    </div>
+
+    <div class="slbl">AI Coach Feedback</div>
+    <div class="fbcard">
+      <div class="fbav">🐰</div>
+      <div class="fbtxt" style="line-height:1.7;font-size:13.5px">
+        When Somi couldn't recall the Korean word for strawberry and used English (<strong>"strawberry"</strong>), Coco smoothly recast it into Korean (<strong>"딸기"</strong>), modeling the correct heritage word without interrupting her train of thought.<br><br>
+        Furthermore, when Somi asked a creative question and <strong>Mom was momentarily unsure of how to answer ("음.....")</strong>, AI Coco stepped in proactively with an imaginative idea—<strong>'Moonlight Fondue' (달빛 퐁듀)</strong>—while introducing new Korean verbs like <strong>"녹이다" (to melt)</strong> and <strong>"찍어 먹다" (to dip & eat)</strong>. This bridged the conversational pause seamlessly and kept the family fully engaged in joyful roleplay.
+      </div>
+    </div>
+    <div class="sumactions">
+      <button class="btn bo bfull" onclick="go('s-progress')">View Growth</button>
+      <button class="btn bp bfull" onclick="go('s-home')">Home</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ SUMMARY WORST ⭐ ════════ -->
+<div class="scr" id="s-summary-worst">
+  <div class="nav">
+    <h2 class="nav-title">Session Log</h2>
+  </div>
+  <div class="bd">
+    <div class="sumhero sum-hero-bad">
+      <div class="sumworld">🚀 Galaxy Explorer Camp</div>
+      <div class="sumtitle">Signal from Planet Luminos</div>
+      <div class="sumparts">Jiwoo · Minjun · Soeun · AI (Zorg) · 4 min 41 sec</div>
+      <div class="overall-stars">⭐</div>
+    </div>
+
+    <div class="slbl">Score Breakdown</div>
+    <div class="score-bkdn">
+      <div class="sbrow"><div class="sblbl">Phrases Spoken</div><div class="sbval bad">14 <span style="font-size:11px;font-weight:600;color:var(--t3)">(avg is 38)</span></div></div>
+      <div class="sbrow"><div class="sblbl">Heritage Language Usage</div><div class="sbval bad">28% (code-switching detected)</div></div>
+      <div class="sbrow"><div class="sblbl">Vocabulary Level</div><div class="sbval bad">Basic — minimal new words</div></div>
+      <div class="sbrow"><div class="sblbl">Creativity & Problem-Solving</div><div class="sbval bad">Very low — story railroaded</div></div>
+      <div class="sbrow"><div class="sblbl">Engagement</div><div class="sbval bad">31% (2 of 3 disengaged)</div></div>
+      <div class="sbrow"><div class="sblbl">Story Completion</div><div class="sbval bad">Unresolved — session dropped</div></div>
+    </div>
+
+    <div class="issue-badge" style="background:#FFF8E1;border-color:#ffe082">
+      <div class="issue-icon">👁</div>
+      <div class="issue-txt" style="color:#7c5a00">🔴 markers below are parent-only annotations — not visible to children during play. They highlight moments where the AI could improve.</div>
+    </div>
+
+    <div class="slbl">Full Session Log</div>
+    <div style="display:flex;flex-direction:column;gap:11px">
+
+      <div class="rlog-sys">Session started · 1 week ago, 4:03 pm · 3 children, 1 AI</div>
+
+      <div class="rlog-bbl rlog-ai">
+        <div class="rlog-av">👾</div>
+        <div class="rlog-cont">
+          <div class="rlog-who">Zorg (AI)</div>
+          <div class="rlog-action">[static crackle]</div>
+          <div class="rlog-txt">Greetings, astronauts! This is Zorg, your alien guide. We've picked up a mysterious signal from Planet Luminos. Mission: find the source before it disappears! Captain Jiwoo — your orders?</div>
+        </div>
+      </div>
+
+      <div class="rlog-sys">[ 3 seconds — no response ]</div>
+
+      <div class="rlog-bbl rlog-child rlog-right">
+        <div class="rlog-cont rlog-r">
+          <div class="rlog-who r">Jiwoo 🚀 + Minjun ⚡ [simultaneously]</div>
+          <div class="rlog-txt">Jiwoo: "I think we should check the ship first—" / Minjun: "Let's just go there right now, I wanna—"</div>
+        </div>
+        <div class="rlog-av">🚀</div>
+      </div>
+
+      <div class="issue-badge">
+        <div class="issue-icon">🔴</div>
+        <div class="issue-txt">Crosstalk — Jiwoo and Minjun spoke simultaneously. Voice recognition failed; neither response was captured. Both children's ideas were lost entirely.</div>
+      </div>
+
+      <div class="rlog-bbl rlog-ai">
+        <div class="rlog-av">👾</div>
+        <div class="rlog-cont">
+          <div class="rlog-who">Zorg (AI)</div>
+          <div class="rlog-txt">Right! Let's prepare for launch. Everyone strap in — here we go!</div>
+        </div>
+      </div>
+
+      <div class="issue-badge">
+        <div class="issue-icon">🔴</div>
+        <div class="issue-txt">AI advanced the story without receiving any command. It should have paused, named each child individually, and waited for a clear response from Captain Jiwoo.</div>
+      </div>
+
+      <div class="rlog-bbl rlog-child rlog-right">
+        <div class="rlog-cont rlog-r">
+          <div class="rlog-who r">Soeun 🌙 [out of character]</div>
+          <div class="rlog-txt">나 배고파. 언제 끝나? (I'm hungry. When does this end?)</div>
+        </div>
+        <div class="rlog-av">🌙</div>
+      </div>
+
+      <div class="rlog-bbl rlog-child rlog-right">
+        <div class="rlog-cont rlog-r">
+          <div class="rlog-who r">Minjun ⚡ [whispering, out of character]</div>
+          <div class="rlog-txt">나도! 저거 먹으면 안 돼? (Me too! Can we eat something?)</div>
+        </div>
+        <div class="rlog-av">⚡</div>
+      </div>
+
+      <div class="issue-badge">
+        <div class="issue-icon">🔴</div>
+        <div class="issue-txt">Two of three children broke from roleplay into a side conversation. AI detected no activity and made no attempt to re-engage either child — a critical missed window.</div>
+      </div>
+
+      <div class="rlog-sys">[ 8 seconds of silence ]</div>
+
+      <div class="rlog-bbl rlog-ai">
+        <div class="rlog-av">👾</div>
+        <div class="rlog-cont">
+          <div class="rlog-who">Zorg (AI)</div>
+          <div class="rlog-txt">3... 2... 1... BLAST OFF! 🚀 We've arrived at Planet Luminos! Astronauts — look out the window. What do you see?</div>
+        </div>
+      </div>
+
+      <div class="issue-badge">
+        <div class="issue-icon">🔴</div>
+        <div class="issue-txt">AI continued the story alone while 2 of 3 children were disengaged. Arrived at a new scene without any player input. The window for re-engagement was lost.</div>
+      </div>
+
+      <div class="rlog-bbl rlog-child rlog-right">
+        <div class="rlog-cont rlog-r">
+          <div class="rlog-who r">Jiwoo · Captain Jiwoo 🚀</div>
+          <div class="rlog-txt">Um... I see 뭔가 반짝이는 거. Like a shiny thing.</div>
+        </div>
+        <div class="rlog-av">🚀</div>
+      </div>
+
+      <div class="issue-badge">
+        <div class="issue-icon">🔴</div>
+        <div class="issue-txt">Code-switch detected — Jiwoo used "뭔가 반짝이는 거" (Korean: "something shiny") mid-English sentence. Zorg did not acknowledge this or gently encourage the full English phrase. Responded only to "shiny thing."</div>
+      </div>
+
+      <div class="rlog-bbl rlog-ai">
+        <div class="rlog-av">👾</div>
+        <div class="rlog-cont">
+          <div class="rlog-who">Zorg (AI)</div>
+          <div class="rlog-txt">Ooh, a shiny thing! Interesting! Can you describe it more, Captain?</div>
+        </div>
+      </div>
+
+      <div class="rlog-bbl rlog-child rlog-right">
+        <div class="rlog-cont rlog-r">
+          <div class="rlog-who r">Minjun ⚡ [interrupting Jiwoo]</div>
+          <div class="rlog-txt">I KNOW WHAT IT IS!! It's an alien egg, Zorg! AN ALIEN EGG!!!</div>
+        </div>
+        <div class="rlog-av">⚡</div>
+      </div>
+
+      <div class="issue-badge">
+        <div class="issue-icon">🔴</div>
+        <div class="issue-txt">Minjun interrupted Jiwoo who was forming a response. AI immediately reacted to Minjun, overriding Jiwoo's contribution. Minjun also addressed AI by name ("Zorg") rather than character name ("Commander Zorg") — AI should have gently corrected this to maintain immersion but responded anyway.</div>
+      </div>
+
+      <div class="rlog-bbl rlog-ai">
+        <div class="rlog-av">👾</div>
+        <div class="rlog-cont">
+          <div class="rlog-who">Zorg (AI)</div>
+          <div class="rlog-txt">AN EGG?! Wonderful, Minjun! What should we do about it?</div>
+        </div>
+      </div>
+
+      <div class="issue-badge">
+        <div class="issue-icon">🔴</div>
+        <div class="issue-txt">AI used real name "Minjun" instead of character name "Lieutenant Blaze." Immersion broken for all three players.</div>
+      </div>
+
+      <div class="rlog-bbl rlog-child rlog-right">
+        <div class="rlog-cont rlog-r">
+          <div class="rlog-who r">Jiwoo [quietly, to herself]</div>
+          <div class="rlog-txt">내가 말하려고 했는데... (I was going to say something...)</div>
+        </div>
+        <div class="rlog-av">🚀</div>
+      </div>
+
+      <div class="rlog-bbl rlog-child rlog-right">
+        <div class="rlog-cont rlog-r">
+          <div class="rlog-who r">Minjun ⚡</div>
+          <div class="rlog-txt">Let's just grab it! Grab the egg!</div>
+        </div>
+        <div class="rlog-av">⚡</div>
+      </div>
+
+      <div class="rlog-bbl rlog-ai">
+        <div class="rlog-av">👾</div>
+        <div class="rlog-cont">
+          <div class="rlog-who">Zorg (AI)</div>
+          <div class="rlog-txt">Great idea! Reaching out to grab the egg now—</div>
+        </div>
+      </div>
+
+      <div class="issue-badge">
+        <div class="issue-icon">🔴</div>
+        <div class="issue-txt">AI acted on one child's impulsive command without checking with Jiwoo or Soeun. Two players excluded from a key story decision. Jiwoo's unheard concern ("what if it bites?") was the most interesting narrative thread — it was never given space.</div>
+      </div>
+
+      <div class="rlog-bbl rlog-child rlog-right">
+        <div class="rlog-cont rlog-r">
+          <div class="rlog-who r">Jiwoo 🚀</div>
+          <div class="rlog-txt">Wait — what if it's dangerous? What if it... bites?</div>
+        </div>
+        <div class="rlog-av">🚀</div>
+      </div>
+
+      <div class="rlog-bbl rlog-ai">
+        <div class="rlog-av">👾</div>
+        <div class="rlog-cont">
+          <div class="rlog-who">Zorg (AI)</div>
+          <div class="rlog-txt">The egg is in our hands! Oh — it's cracking open! Something is hatching!</div>
+        </div>
+      </div>
+
+      <div class="issue-badge">
+        <div class="issue-icon">🔴</div>
+        <div class="issue-txt">Jiwoo's concern was completely ignored — the story was pushed forward over her. This is the second time her voice was overridden. Her engagement visibly dropped after this point.</div>
+      </div>
+
+      <div class="rlog-bbl rlog-child rlog-right">
+        <div class="rlog-cont rlog-r">
+          <div class="rlog-who r">Minjun ⚡</div>
+          <div class="rlog-txt">I wanna go to the bathroom.</div>
+        </div>
+        <div class="rlog-av">⚡</div>
+      </div>
+
+      <div class="rlog-bbl rlog-child rlog-right">
+        <div class="rlog-cont rlog-r">
+          <div class="rlog-who r">Soeun 🌙</div>
+          <div class="rlog-txt">Yeah, me too actually.</div>
+        </div>
+        <div class="rlog-av">🌙</div>
+      </div>
+
+      <div class="rlog-bbl rlog-child rlog-right">
+        <div class="rlog-cont rlog-r">
+          <div class="rlog-who r">Jiwoo 🚀 [sighs]</div>
+          <div class="rlog-txt">...We didn't even find out what the signal was.</div>
+        </div>
+        <div class="rlog-av">🚀</div>
+      </div>
+
+      <div class="rlog-sys">Session dropped — story unresolved · 4 min 41 sec</div>
+    </div>
+
+    <div class="slbl">Vocabulary Detected</div>
+    <div class="lwords">
+      <div class="lword" style="background:#FFF0F0;color:#c0392b">signal</div>
+      <div class="lword" style="background:#FFF0F0;color:#c0392b">dangerous</div>
+      <div class="lword" style="background:#FFF0F0;color:#c0392b">mysterious</div>
+    </div>
+    <div style="font-size:12px;color:var(--t3);margin-top:4px">Only 3 unique words — well below the session average of 18+.</div>
+
+    <div class="slbl">AI Coach Analysis</div>
+    <div class="fbcard">
+      <div class="fbav">👾</div>
+      <div class="fbtxt">Several compounding issues in this session. The <strong>crosstalk at the start</strong> set a chaotic tone that never recovered. <strong>Code-switching</strong> (Jiwoo mixing Korean mid-sentence) went unaddressed — a missed teaching moment. Most critically, <strong>Jiwoo was overridden twice</strong> and her most interesting idea — "what if it bites?" — was never explored. For 3-child sessions, consider having each child take a turn in sequence. Also: <strong>Soeun never found her role</strong>. She needed a direct, personal invitation from the story to engage.</div>
+    </div>
+    <div class="sumactions">
+      <button class="btn bp bfull" onclick="go('s-ns1')">🔄 Retry This Adventure</button>
+      <button class="btn bo bfull" onclick="go('s-home')">Home</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ SUMMARY MID ⭐⭐ ════════ -->
+<div class="scr" id="s-summary">
+  <div class="nav">
+    <h2 class="nav-title">Session Log</h2>
+  </div>
+  <div class="bd">
+    <div class="sumhero">
+      <div class="sumworld">🧁 The Enchanted Bakery</div>
+      <div class="sumtitle">The Missing Golden Whisk</div>
+      <div class="sumparts">Jiwoo (Chef Lily) · AI (Madam Crumble) · 4 min 2 sec</div>
+      <div class="overall-stars">⭐⭐</div>
+    </div>
+
+    <div class="slbl">Score Breakdown</div>
+    <div class="score-bkdn">
+      <div class="sbrow"><div class="sblbl">Phrases Spoken</div><div class="sbval good">31</div></div>
+      <div class="sbrow"><div class="sblbl">Heritage Language Usage</div><div class="sbval good">82%</div></div>
+      <div class="sbrow"><div class="sblbl">Vocabulary Level</div><div class="sbval good">Conversational — some new words</div></div>
+      <div class="sbrow"><div class="sblbl">Creativity &amp; Problem-Solving</div><div class="sbval good">Good ✦✦</div></div>
+      <div class="sbrow"><div class="sblbl">Engagement</div><div class="sbval good">88%</div></div>
+      <div class="sbrow"><div class="sblbl">Story Completion</div><div class="sbval bad">Partially resolved — ended just before climax</div></div>
+    </div>
+
+    <div class="slbl">Full Session Log</div>
+    <div style="display:flex;flex-direction:column;gap:11px">
+
+      <div class="rlog-sys">Session started · 2 weeks ago, 3:40 pm</div>
+
+      <div class="rlog-bbl rlog-ai">
+        <div class="rlog-av">🧁</div>
+        <div class="rlog-cont">
+          <div class="rlog-who">Madam Crumble (AI)</div>
+          <div class="rlog-action">[oven bell rings frantically]</div>
+          <div class="rlog-txt">Oh no, oh no, oh no! Lily! The Golden Whisk — it’s gone! Without it, not a single magical cake will rise tonight!</div>
+        </div>
+      </div>
+
+      <div class="rlog-bbl rlog-child rlog-right">
+        <div class="rlog-cont rlog-r">
+          <div class="rlog-who r">Jiwoo · Chef Lily 👩‍🍳</div>
+          <div class="rlog-txt">Gone?! Where did it go?! Did someone take it?</div>
+        </div>
+        <div class="rlog-av">👩‍🍳</div>
+      </div>
+
+      <div class="rlog-bbl rlog-ai">
+        <div class="rlog-av">🧁</div>
+        <div class="rlog-cont">
+          <div class="rlog-who">Madam Crumble (AI)</div>
+          <div class="rlog-txt">I don’t know! The delivery goblins were here this morning. What should we do first, my little pastry apprentice?</div>
+        </div>
+      </div>
+
+      <div class="rlog-bbl rlog-child rlog-right">
+        <div class="rlog-cont rlog-r">
+          <div class="rlog-who r">Jiwoo · Chef Lily</div>
+          <div class="rlog-txt">Um... check where they came from? Like follow their footprints?</div>
+        </div>
+        <div class="rlog-av">👩‍🍳</div>
+      </div>
+
+      <div class="rlog-bbl rlog-ai">
+        <div class="rlog-av">🧁</div>
+        <div class="rlog-cont">
+          <div class="rlog-who">Madam Crumble (AI)</div>
+          <div class="rlog-txt">Brilliant! I see crumbs leading from the pantry door — tiny, sparkly crumbs. Lily — do you know what makes sparkly crumbs?</div>
+        </div>
+      </div>
+
+      <div class="rlog-bbl rlog-child rlog-right">
+        <div class="rlog-cont rlog-r">
+          <div class="rlog-who r">Jiwoo · Chef Lily</div>
+          <div class="rlog-txt">Star sugar! The special ingredient! So... the goblin took star sugar too?</div>
+        </div>
+        <div class="rlog-av">👩‍🍳</div>
+      </div>
+
+      <div class="rlog-bbl rlog-ai">
+        <div class="rlog-av">🧁</div>
+        <div class="rlog-cont">
+          <div class="rlog-who">Madam Crumble (AI)</div>
+          <div class="rlog-txt">...You clever, clever girl. They weren’t stealing — they were <em>attracted</em> to the star sugar! They must have taken the whisk by accident. What’s near the star sugar shelf?</div>
+        </div>
+      </div>
+
+      <div class="rlog-bbl rlog-child rlog-right">
+        <div class="rlog-cont rlog-r">
+          <div class="rlog-who r">Jiwoo · Chef Lily</div>
+          <div class="rlog-txt">Um... *thinks* ...the window! The window that faces the forest!</div>
+        </div>
+        <div class="rlog-av">👩‍🍳</div>
+      </div>
+
+      <div class="rlog-bbl rlog-ai">
+        <div class="rlog-av">🧁</div>
+        <div class="rlog-cont">
+          <div class="rlog-who">Madam Crumble (AI)</div>
+          <div class="rlog-txt">To the window, then — quickly! Before they reach the trees and we lose the trail!</div>
+        </div>
+      </div>
+
+      <div class="rlog-bbl rlog-child rlog-right">
+        <div class="rlog-cont rlog-r">
+          <div class="rlog-who r">Jiwoo · Chef Lily</div>
+          <div class="rlog-txt">Wait — there! I can see something gold glinting in the tall grass just outside!</div>
+        </div>
+        <div class="rlog-av">👩‍🍳</div>
+      </div>
+
+      <div class="rlog-sys">Session ended · 4 min 2 sec · Story just before resolution</div>
+    </div>
+
+    <div class="slbl">Vocabulary Used (AI-detected)</div>
+    <div class="lwords">
+      <div class="lword">attracted</div>
+      <div class="lword">ingredient</div>
+      <div class="lword">glinting</div>
+      <div class="lword">pantry</div>
+      <div class="lword">apprentice</div>
+      <div class="lword">accidentally</div>
+    </div>
+
+    <div class="slbl">AI Coach Feedback</div>
+    <div class="fbcard">
+      <div class="fbav">🧁</div>
+      <div class="fbtxt">소미가 딸기와 마시멜로로 새로운 음식을 상상하며 아주 자연스럽게 한국어로 질문을 던졌어요! 엄마가 잠시 고민할 때 AI 코코가 '달나라 딸기 스모어' 아이디어와 함께 <strong>'굽다'</strong> 어휘를 자연스럽게 제안했고, 소미가 이를 즉각 '구워볼래!'로 확장해 응답했습니다. 가족 간의 자연스러운 티키타카와 어휘 성장이 돋보인 훌륭한 세션입니다! 🌟</div>
+    </div>
+    <div class="sumactions">
+      <button class="btn bo bfull" onclick="go('s-progress')">View Growth</button>
+      <button class="btn bp bfull" onclick="go('s-ns1')">✨ New Adventure</button>
+      <button class="btn bo bfull" onclick="go('s-home')">Home</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ PROGRESS ════════ -->
+<div class="scr" id="s-progress">
+  <div class="nav">
+    <h2 class="nav-title">Growth</h2>
+  </div>
+  <div class="bd">
+    <div class="ctabs" id="growth-child-tabs">
+      <!-- Dynamic child tabs -->
+    </div>
+    <div id="growth-child-panels">
+      <!-- Dynamic child panels -->
+    </div>
+  </div>
+</div>
+
+<!-- ════════ STORIES ════════ -->
+<div class="scr" id="s-stories">
+  <div class="nav"><h2 class="nav-title">My Adventures</h2></div>
+  <div class="bd">
+    <div class="fpills">
+      <div class="fpill active" onclick="pickFilter(this)">All</div>
+      <div class="fpill" onclick="pickFilter(this)">Fantasy</div>
+      <div class="fpill" onclick="pickFilter(this)">Space</div>
+      <div class="fpill" onclick="pickFilter(this)">Mystery</div>
+      <div class="fpill" onclick="pickFilter(this)">Magic</div>
+    </div>
+    <div class="mfrow" id="adventures-member-filter-row">
+      <!-- Dynamically rendered member filters -->
+    </div>
+
+    <div class="dgrp">This Week</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="rcard rcard-dino" onclick="go('s-summary-best')">
+        <div class="rinfo">
+          <div class="rtitle">Mystery of the Missing Egg</div>
+          <div class="rmeta">Jiwoo · Mom · 3 days ago · 52 phrases</div>
+        </div>
+        <div class="rbadge" style="background:rgba(39, 174, 96, 0.5);border-color:rgba(39,174,96,0.7)">⭐⭐⭐</div>
+      </div>
+      <div class="rcard rcard-ocean" onclick="go('s-summary-best')">
+        <div class="rinfo">
+          <div class="rtitle">The Deep Sea Rescue</div>
+          <div class="rmeta">Jiwoo · 3 days ago · 31 phrases</div>
+        </div>
+        <div class="rbadge" style="background:rgba(255,255,255,0.25)">⭐⭐</div>
+      </div>
+    </div>
+
+    <div class="dgrp">Last Week</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="rcard rcard-space" onclick="go('s-summary-worst')">
+        <div class="rinfo">
+          <div class="rtitle">Signal from Planet Luminos</div>
+          <div class="rmeta">Jiwoo · Minjun · Soeun · 1 week ago · 14 phrases</div>
+        </div>
+        <div class="rbadge" style="background:rgba(231, 76, 60, 0.5);border-color:rgba(231,76,60,0.7)">⭐</div>
+      </div>
+      <div class="rcard rcard-space" onclick="go('s-summary-best')">
+        <div class="rinfo">
+          <div class="rtitle">Galaxy Explorer Camp</div>
+          <div class="rmeta">Jiwoo · 1 week ago · 29 phrases</div>
+        </div>
+        <div class="rbadge" style="background:rgba(39, 174, 96, 0.5);border-color:rgba(39,174,96,0.7)">⭐⭐⭐</div>
+      </div>
+    </div>
+
+    <div class="dgrp">Earlier</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="rcard rcard-bakery" onclick="go('s-summary')">
+        <div class="rinfo">
+          <div class="rtitle">The Enchanted Bakery</div>
+          <div class="rmeta">Jiwoo · 2 weeks ago · 31 phrases</div>
+        </div>
+        <div class="rbadge" style="background:rgba(255,255,255,0.25)">⭐⭐</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- ════════ GLOBAL PERSISTENT BOTTOM NAVIGATION ════════ -->
+<div class="bnav" id="global-bnav">
+  <button class="bnt active" id="bnt-home" onclick="go('s-home')"><span>🏠</span><span>Home</span></button>
+  <button class="bnt" id="bnt-stories" onclick="go('s-stories')"><span>📖</span><span>Adventures</span></button>
+  <button class="bnt" id="bnt-progress" onclick="go('s-progress')"><span>📈</span><span>Growth</span></button>
+  <button class="bnt" id="bnt-settings" onclick="go('s-settings')"><span>⚙️</span><span>Settings</span></button>
+</div>
+
+<!-- ════════ BOTTOM SHEETS ════════ -->
+<div class="bsov" id="ov-role" onclick="closeRoleEdit()"></div>
+<div class="bs" id="bs-role">
+  <div class="bshandle"></div>
+  <div class="bstitle">Edit Character Role</div>
+  <div class="flbl">Character Emoji / Avatar</div>
+  <div class="avrow" id="role-avrow">
+    <div class="avpick active">🦖</div>
+    <div class="avpick">🤖</div>
+    <div class="avpick">🐻</div>
+    <div class="avpick">🧙</div>
+    <div class="avpick">🧚</div>
+    <div class="avpick">🦴</div>
+    <div class="avpick">🗺️</div>
+    <div class="avpick">🛡️</div>
+    <div class="avpick">🌟</div>
+  </div>
+  <div class="flbl">Role Name</div>
+  <input class="finput" id="re-name" type="text" value="Rex — Talking T-Rex"/>
+  <button class="btn bp bfull" onclick="saveRoleEdit()">Save Role ✓</button>
+</div>
+
+<div class="bsov" id="ov-exit" onclick="closeExit()"></div>
+<div class="bs" id="bs-exit">
+  <div class="bshandle"></div>
+  <div class="bstitle">End the adventure?</div>
+  <p style="color:#666;font-size:13px;text-align:center;margin-bottom:8px">Session log will be saved for you to review.</p>
+  <button class="btn bdanger bfull" onclick="endSession()">End Session</button>
+  <button class="btn bo bfull" style="margin-top:8px" onclick="closeExit()">Keep Playing</button>
+</div>
+
+<script>
+/* ── Dynamic Members State ── */
+let members = [
+  {
+    id: 'jiwoo',
+    name: 'Jiwoo',
+    type: 'child',
+    role: 'Hero Child',
+    rel: 'Daughter / Son',
+    age: 8,
+    photo: 'jiwoo.jpg',
+    emoji: '👦',
+    level: '🌿 Conversational',
+    levelKey: 'conv',
+    heritage: 'Korean 🇰🇷',
+    daily: 'English 🇺🇸',
+    interests: ['🦕 Dinosaurs', '🧜 Fantasy', '🐾 Animals'],
+    phrases: 147,
+    adventures: 12,
+    playtime: '4.8h',
+    levelProgress: '62%',
+    nextLevel: '🌳 Fluent',
+    weeklyDays: [true, true, false, true, true, true, true],
+    categories: [{ name: '🌿 Nature', count: 34 }, { name: '🎭 Actions', count: 28 }, { name: '😊 Emotions', count: 22 }, { name: '🔍 Mystery', count: 18 }],
+    notes: 'Jiwoo is a bit shy — please talk to her more proactively. Loves being praised. Gets excited about dinosaurs!'
+  },
+  {
+    id: 'somi',
+    name: 'Somi',
+    type: 'child',
+    role: 'Hero Child',
+    rel: 'Daughter / Son',
+    age: 5,
+    photo: 'somi.jpg',
+    emoji: '👧',
+    level: '🌱 Beginner',
+    levelKey: 'beg',
+    heritage: 'Korean 🇰🇷',
+    daily: 'English 🇺🇸',
+    interests: ['🚀 Space', '🍓 Fruits & Food', '🧚 Fairies', '🐱 Cats', '🌈 Rainbows'],
+    phrases: 43,
+    adventures: 5,
+    playtime: '1.4h',
+    levelProgress: '28%',
+    nextLevel: '🌿 Conversational',
+    weeklyDays: [false, false, false, true, false, true, true],
+    categories: [
+      { name: '🍓 Fruits & Food', count: 18 },
+      { name: '🚀 Space & Moon', count: 14 },
+      { name: '🐱 Animals', count: 10 },
+      { name: '🌈 Colors', count: 8 }
+    ],
+    notes: 'Somi loves space adventures, sweet fruits (especially strawberries!), and being the center of attention — please call her name often! Keep things bright and cheerful.'
+  },
+  {
+    id: 'mom',
+    name: 'Yuna',
+    type: 'adult',
+    role: 'Supporting Player',
+    rel: 'Mom',
+    photo: 'mom.jpg',
+    emoji: '👩',
+    heritage: 'Korean 🇰🇷',
+    daily: 'English 🇺🇸'
+  },
+  {
+    id: 'dad',
+    name: 'Jae',
+    type: 'adult',
+    role: 'Supporting Player',
+    rel: 'Dad',
+    photo: 'dad.jpg',
+    emoji: '👨',
+    heritage: 'Korean 🇰🇷',
+    daily: 'English 🇺🇸'
+  }
+];
+
+let currentProfileMemberId = 'jiwoo';
+
+/* ── Render all dynamic member lists ── */
+function renderAllMembers() {
+  renderHomeMembers();
+  renderSettingsMembers();
+  renderNS1Members();
+  renderAdventureFilterMembers();
+  renderGrowthMembers();
+}
+
+function getAvatarHTML(m, sizeClass = '') {
+  if (m.photo) {
+    return `<img class="av-img ${sizeClass}" src="${m.photo}" alt="${m.name}" onerror="this.outerHTML='${m.emoji || '👤'}'">`;
+  }
+  return m.emoji || '👤';
+}
+
+function renderHomeMembers() {
+  const container = document.getElementById('home-members-row');
+  if (!container) return;
+  let html = '';
+  members.forEach(m => {
+    const isChild = m.type === 'child';
+    const avContent = m.photo ? `<img class="av-img" src="${m.photo}" alt="${m.name}">` : (m.emoji || '👤');
+    const chipClass = isChild ? 'ch' : 'pa';
+    const label = isChild ? m.name : `${m.name} (${m.rel || 'Supporter'})`;
+    html += `
+      <div class="chip" onclick="openMemberProfile('${m.id}')">
+        <div class="chav ${chipClass}" style="${m.photo ? 'overflow:hidden' : ''}">${avContent}</div>
+        <span>${label}</span>
+      </div>
+    `;
+  });
+  html += `
+    <div class="chip" onclick="go('s-add-member')">
+      <div class="chav add">＋</div><span>Add</span>
+    </div>
+  `;
+  container.innerHTML = html;
+}
+
+function renderSettingsMembers() {
+  const container = document.getElementById('settings-members-list');
+  if (!container) return;
+  let html = '';
+  members.forEach(m => {
+    const isChild = m.type === 'child';
+    const avContent = m.photo ? `<img class="av-img" src="${m.photo}" alt="${m.name}">` : (m.emoji || '👤');
+    const subtext = isChild ? `Hero · Age ${m.age} · Korean ${m.level.split(' ')[1] || m.level}` : `${m.rel || 'Supporting'} (${m.role})`;
+    html += `
+      <div class="smcard ${isChild ? 'chc' : ''}" onclick="openMemberProfile('${m.id}')">
+        <div class="smav" style="${m.photo ? 'overflow:hidden' : ''}">${avContent}</div>
+        <div class="sminfo"><div class="smname">${m.name}</div><div class="smtype">${subtext}</div></div>
+        <div class="smchev">›</div>
+      </div>
+    `;
+  });
+  container.innerHTML = html;
+}
+
+function renderNS1Members() {
+  const childList = document.getElementById('ns1-children-list');
+  const adultList = document.getElementById('ns1-adults-list');
+  if (!childList || !adultList) return;
+
+  const children = members.filter(m => m.type === 'child');
+  const adults = members.filter(m => m.type !== 'child');
+
+  let cHtml = '';
+  children.forEach((c) => {
+    const isSel = false; // None selected by default
+    const av = c.photo ? `<img class="av-img" src="${c.photo}" alt="${c.name}">` : (c.emoji || '👦');
+    const cleanLevel = (c.level || '').replace(/^[^\w\s가-힣]+\s*/, '');
+    cHtml += `
+      <div class="pcard ${isSel ? 'sel' : ''} pc-child" id="pc-${c.id}" data-id="${c.id}" data-name="${c.name}" data-level="${cleanLevel}" onclick="toggleChild(this)">
+        <div class="pcav" style="background:#FFF0F5;overflow:hidden">${av}</div>
+        <div class="pcinfo">
+          <div class="pcname">${c.name}</div>
+          <div class="pcmeta">Age ${c.age} · ${cleanLevel}</div>
+        </div>
+        <div class="pcchk"></div>
+      </div>
+    `;
+  });
+  childList.innerHTML = cHtml;
+
+  let aHtml = '';
+  adults.forEach((a) => {
+    const isSel = false; // None selected by default
+    const av = a.photo ? `<img class="av-img" src="${a.photo}" alt="${a.name}">` : (a.emoji || '👤');
+    aHtml += `
+      <div class="pcard ${isSel ? 'sel' : ''} pc-adult" id="aj-${a.id}" data-id="${a.id}" data-name="${a.name}" onclick="toggleJoin(this)">
+        <div class="pcav" style="background:#F0FBFA;overflow:hidden">${av}</div>
+        <div class="pcinfo"><div class="pcname">${a.name} (${a.rel || 'Supporting'})</div></div>
+        <div class="pcchk"></div>
+      </div>
+    `;
+  });
+  adultList.innerHTML = aHtml;
+  updateChildMode();
+}
+
+function renderAdventureFilterMembers() {
+  const container = document.getElementById('adventures-member-filter-row');
+  if (!container) return;
+  let html = `<div class="mfchip active" onclick="pickMember(this,'all')">All</div>`;
+  members.forEach(m => {
+    const av = m.photo ? `<div class="mfav"><img class="av-img" src="${m.photo}" alt="${m.name}"></div>` : `<span>${m.emoji || '👤'}</span>`;
+    const label = m.type === 'child' ? m.name : `${m.name} (${m.rel || 'Supporter'})`;
+    html += `
+      <div class="mfchip" onclick="pickMember(this,'${m.id}')">
+        ${av}
+        <span>${label}</span>
+      </div>
+    `;
+  });
+  container.innerHTML = html;
+}
+
+function renderGrowthMembers() {
+  const tabsContainer = document.getElementById('growth-child-tabs');
+  const panelsContainer = document.getElementById('growth-child-panels');
+  if (!tabsContainer || !panelsContainer) return;
+
+  const children = members.filter(m => m.type === 'child');
+  if (!children.length) {
+    tabsContainer.innerHTML = '<div style="font-size:12px;color:#888;padding:8px">No children registered yet</div>';
+    panelsContainer.innerHTML = '';
+    return;
+  }
+
+  let tabsHtml = '';
+  let panelsHtml = '';
+  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Today'];
+
+  children.forEach((c, idx) => {
+    const isActive = idx === 0;
+    const av = c.photo ? `<img class="av-img" src="${c.photo}" alt="${c.name}">` : (c.emoji || '👦');
+    tabsHtml += `
+      <div class="ctab ${isActive ? 'active' : ''}" id="ct-${c.id}" onclick="switchChild('${c.id}')">
+        <div class="ctav">${av}</div>
+        <span>${c.name}</span>
+      </div>
+    `;
+
+    const weeklyDays = c.weeklyDays || [false, true, false, true, false, true, true];
+    let chartHtml = '';
+    days.forEach((dayName, dIdx) => {
+      const active = weeklyDays[dIdx];
+      const isToday = dIdx === 6;
+      const height = active ? (isToday ? '30%' : `${30 + (dIdx * 12) % 65}%`) : '4px';
+      chartHtml += `
+        <div class="dbw">
+          <div class="dem">${active ? '📖' : ''}</div>
+          <div class="db ${!active ? 'db-off' : ''} ${isToday ? 'today' : ''}" style="height:${height}"></div>
+          <div class="dl" style="${!active ? 'opacity:.4' : ''}">${dayName}</div>
+        </div>
+      `;
+    });
+
+    const categories = c.categories || [{ name: '🌿 Nature', count: 14 }, { name: '🎭 Actions', count: 8 }, { name: '😊 Emotions', count: 6 }];
+    const catHtml = categories.map(cat => `<div class="catpill">${cat.name} <strong>${cat.count}</strong></div>`).join('');
+
+    const vocabList = c.id === 'somi' 
+      ? ['🌸 꽃잎 (Petal)', '🧚 요정 (Fairy)', '🌈 무지개 (Rainbow)', '🐱 고양이 (Cat)', '✨ 마법 (Magic)']
+      : ['🦖 화석 (Fossil)', '🌋 화산 (Volcano)', '🐾 야행성 (Nocturnal)', '💡 단서 (Clue)', '🗺️ 지도 (Map)', '✨ 성분 (Ingredient)'];
+    const vocabHtml = vocabList.map(v => `<div class="vocab-chip">${v}</div>`).join('');
+
+    panelsHtml += `
+      <div id="cp-${c.id}" class="cpanel ${isActive ? 'active' : ''}">
+        <div class="pstats" style="margin-top:2px">
+          <div class="pstat"><div class="pstatv">${c.phrases || 0}</div><div class="pstatl">Phrases Spoken</div></div>
+          <div class="pstat"><div class="pstatv">${c.adventures || 0}</div><div class="pstatl">Adventures</div></div>
+          <div class="pstat"><div class="pstatv">${c.playtime || '0h'}</div><div class="pstatl">Play Time</div></div>
+        </div>
+
+        <div>
+          <div class="slbl" style="margin-bottom:8px">Level Progress</div>
+          <div class="lpcard">
+            <div class="lptop"><span>${c.level}</span><span>→ ${c.nextLevel || '🌳 Fluent'}</span></div>
+            <div class="lpbg"><div class="lpfill" style="width:${c.levelProgress || '30%'}"></div></div>
+            <div class="lppct">
+              <span><strong>${c.levelProgress || '30%'}</strong> completed</span>
+              <span style="color:var(--p);font-weight:700">3 sessions to level up 🎉</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="slbl" style="margin-bottom:8px">This Week's Activity</div>
+          <div class="wchart">
+            ${chartHtml}
+          </div>
+        </div>
+
+        <div>
+          <div class="slbl" style="margin-bottom:8px">Topic Categories Practiced</div>
+          <div class="catpills">
+            ${catHtml}
+          </div>
+        </div>
+
+        <div>
+          <div class="slbl" style="margin-bottom:8px">Recent Mastered Vocabulary ✨</div>
+          <div class="vocab-grid">
+            ${vocabHtml}
+          </div>
+        </div>
+      </div>
+    `;
+  });
+
+  tabsContainer.innerHTML = tabsHtml;
+  panelsContainer.innerHTML = panelsHtml;
+}
+
+/* ── Open Member Profile ── */
+function openMemberProfile(id) {
+  const m = members.find(x => x.id === id);
+  if (!m) return;
+  currentProfileMemberId = id;
+
+  document.getElementById('pm-nav-title').textContent = `${m.name}'s Profile`;
+  const avContainer = document.getElementById('pm-avatar');
+  if (m.photo) {
+    avContainer.innerHTML = `<img class="av-img" src="${m.photo}" alt="${m.name}">`;
+  } else {
+    avContainer.textContent = m.emoji || '👤';
+  }
+
+  document.getElementById('pm-name').textContent = m.name;
+  const isChild = m.type === 'child';
+  document.getElementById('pm-badge').className = `pbadge ${isChild ? 'chb' : ''}`;
+  document.getElementById('pm-badge').textContent = isChild ? `Hero Child · Age ${m.age}` : `${m.rel || 'Supporting'} · ${m.role}`;
+
+  // Stats row
+  const statsRow = document.getElementById('pm-stats-row');
+  if (isChild) {
+    statsRow.style.display = 'flex';
+    document.getElementById('pm-stat-adv').textContent = m.adventures || 0;
+    document.getElementById('pm-stat-phr').textContent = m.phrases || 0;
+    document.getElementById('pm-stat-time').textContent = m.playtime || '0h';
+  } else {
+    statsRow.style.display = 'none';
+  }
+
+  // Info list
+  let infoHtml = `
+    <div class="srow srow-nc"><span>Relationship</span><span class="sval">${m.rel || (isChild ? 'Child' : 'Supporting Player')}</span></div>
+    <div class="srow srow-nc"><span>Heritage Language</span><span class="sval">${m.heritage || 'Korean 🇰🇷'}</span></div>
+    <div class="srow srow-nc"><span>Daily Language</span><span class="sval">${m.daily || 'English 🇺🇸'}</span></div>
+  `;
+  if (isChild) {
+    infoHtml += `<div class="srow srow-nc"><span>Language Level</span><span class="sval">${m.level}</span></div>`;
+  }
+  document.getElementById('pm-info-list').innerHTML = infoHtml;
+
+  // Interests section
+  const intSec = document.getElementById('pm-interests-section');
+  if (isChild && m.interests && m.interests.length) {
+    intSec.style.display = 'block';
+    document.getElementById('pm-interests-grid').innerHTML = m.interests.map(it => `<div class="itag active">${it}</div>`).join('');
+  } else {
+    intSec.style.display = 'none';
+  }
+
+  // Notes section
+  const noteSec = document.getElementById('pm-notes-section');
+  if (isChild && m.notes) {
+    noteSec.style.display = 'block';
+    document.getElementById('pm-notes-text').textContent = `"${m.notes}"`;
+  } else {
+    noteSec.style.display = 'none';
+  }
+
+  go('s-edit-member');
+}
+
+/* ── Remove Member ── */
+function removeCurrentMember() {
+  const m = members.find(x => x.id === currentProfileMemberId);
+  if (!m) return;
+  if (!confirm(`Are you sure you want to remove ${m.name}?`)) return;
+
+  members = members.filter(x => x.id !== currentProfileMemberId);
+  renderAllMembers();
+  alert(`${m.name} has been removed.`);
+  go('s-home');
+}
+
+/* ── Relationship pill helper for supporter registration ── */
+let selectedRel = 'Mom';
+function pickRelPill(el, relValue) {
+  document.getElementById('rel-pills').querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  selectedRel = relValue;
+  const otherBox = document.getElementById('rel-other-box');
+  if (otherBox) {
+    otherBox.style.display = relValue === 'Other' ? 'block' : 'none';
+  }
+}
+
+
+/* ── Photo Upload Logic for Member Registration ── */
+let uploadedMemberPhotos = {
+  'reg-child': null,
+  'reg-comp': null
+};
+
+function triggerPhotoUpload(inputId) {
+  const el = document.getElementById(inputId);
+  if (el) el.click();
+}
+
+function handlePhotoUpload(input, type) {
+  if (input.files && input.files[0]) {
+    const file = input.files[0];
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const dataUrl = e.target.result;
+      uploadedMemberPhotos[type] = dataUrl;
+      
+      const preview = document.getElementById(type + '-photo-preview');
+      const card = document.getElementById(type + '-photo-card');
+      const removeBtn = document.getElementById(type + '-photo-remove');
+      
+      if (preview && card) {
+        card.classList.add('has-photo');
+        preview.innerHTML = `
+          <img class="uploaded-img" src="${dataUrl}" alt="Preview">
+          <div class="pu-text">Photo Selected ✓</div>
+          <div class="pu-sub">Click to change photo</div>
+        `;
+      }
+      if (removeBtn) removeBtn.style.display = 'block';
+      
+      // Deactivate emojis
+      document.querySelectorAll('#' + type + '-avrow .avpick').forEach(p => p.classList.remove('active'));
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
+function removeUploadedPhoto(type) {
+  uploadedMemberPhotos[type] = null;
+  const input = document.getElementById(type + '-file-input');
+  if (input) input.value = '';
+  
+  const preview = document.getElementById(type + '-photo-preview');
+  const card = document.getElementById(type + '-photo-card');
+  const removeBtn = document.getElementById(type + '-photo-remove');
+  
+  if (card && preview) {
+    card.classList.remove('has-photo');
+    const subText = type === 'reg-child' ? 'Upload a real photo of the child' : 'Upload a real photo of the supporter';
+    preview.innerHTML = `
+      <div class="pu-icon">📸</div>
+      <div class="pu-text">Take Photo or Choose Image</div>
+      <div class="pu-sub">${subText}</div>
+    `;
+  }
+  if (removeBtn) removeBtn.style.display = 'none';
+  
+  // Activate first emoji
+  const firstEmoji = document.querySelector('#' + type + '-avrow .avpick');
+  if (firstEmoji) firstEmoji.classList.add('active');
+}
+
+function selectEmojiFallback(type, el) {
+  if (uploadedMemberPhotos[type]) {
+    removeUploadedPhoto(type);
+  }
+  document.querySelectorAll('#' + type + '-avrow .avpick').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+}
+
+/* ── Add Supporter Finish ── */
+function finishAddSupporter() {
+  const nameInput = document.getElementById('reg-comp-name');
+  const name = nameInput.value.trim() || (selectedRel === 'Other' ? 'Family Member' : selectedRel);
+  
+  let finalRel = selectedRel;
+  if (selectedRel === 'Other') {
+    const customRel = document.getElementById('reg-comp-other-val')?.value.trim();
+    finalRel = customRel || 'Other Supporter';
+  }
+
+  // Get active photo or emoji
+  const photo = uploadedMemberPhotos['reg-comp'] || null;
+  const activeAv = document.querySelector('#reg-comp-avrow .avpick.active')?.textContent.trim() || '👩';
+
+  const newId = 'mem_' + Date.now();
+  members.push({
+    id: newId,
+    name: name,
+    type: 'adult',
+    role: 'Supporting Player',
+    rel: finalRel,
+    photo: photo,
+    emoji: activeAv,
+    heritage: 'Korean 🇰🇷',
+    daily: 'English 🇺🇸'
+  });
+
+  renderAllMembers();
+
+  // Reset fields
+  nameInput.value = '';
+  if (document.getElementById('reg-comp-other-val')) document.getElementById('reg-comp-other-val').value = '';
+  go('s-done');
+}
+
+/* ── Add Child Finish ── */
+function finishAddChild() {
+  const nameInput = document.getElementById('reg-child-name');
+  const name = nameInput.value.trim() || 'New Adventurer';
+  const childAge = age || 7;
+  const photo = uploadedMemberPhotos['reg-child'] || null;
+  const activeAv = document.querySelector('#reg-child-avrow .avpick.active')?.textContent.trim() || '👧';
+  
+  // Level
+  const activeLvlPill = document.querySelector('#lvl-pills .pill.active')?.textContent.trim() || '';
+  let levelStr = '🌱 Beginner';
+  if (activeLvlPill.includes('simple conversations')) levelStr = '🌿 Conversational';
+  else if (activeLvlPill.includes('limited vocabulary')) levelStr = '🌳 Intermediate';
+  else if (activeLvlPill.includes('Fluent')) levelStr = '🌟 Fluent';
+  else if (activeLvlPill.includes('Understands basics')) levelStr = '🌱 Beginner';
+
+  // Interests
+  const activeInterests = [...document.querySelectorAll('#s-reg-child2 .igrid .itag.active')].map(t => t.textContent.trim());
+  const notes = document.getElementById('reg-child-notes')?.value.trim() || '';
+  const heritage = document.getElementById('reg-child-heritage')?.value || 'Korean 🇰🇷';
+  const daily = document.getElementById('reg-child-daily')?.value || 'English 🇺🇸';
+
+  const newId = 'child_' + Date.now();
+  members.push({
+    id: newId,
+    name: name,
+    type: 'child',
+    role: 'Hero Child',
+    rel: 'Child',
+    age: childAge,
+    photo: photo,
+    emoji: activeAv,
+    level: levelStr,
+    heritage: heritage,
+    daily: daily,
+    interests: activeInterests.length ? activeInterests : ['🦕 Dinosaurs', '🧚 Fairies'],
+    phrases: 0,
+    adventures: 0,
+    playtime: '0h',
+    levelProgress: '10%',
+    nextLevel: '🌿 Conversational',
+    weeklyDays: [false, false, false, false, false, false, true],
+    categories: [{ name: '🌿 Nature', count: 2 }, { name: '🎭 Actions', count: 1 }],
+    notes: notes
+  });
+
+  renderAllMembers();
+
+  // Reset inputs
+  nameInput.value = '';
+  if (document.getElementById('reg-child-notes')) document.getElementById('reg-child-notes').value = '';
+  go('s-done');
+}
+
+
+/* ── Transcript toggle logic (NS5) ── */
+function toggleTranscript(el) {
+  el.classList.toggle('on');
+  const infoBox = document.getElementById('transcript-info-box');
+  if (infoBox) {
+    infoBox.style.display = el.classList.contains('on') ? 'none' : 'block';
+  }
+}
+
+/* ── Device connection screen logic ── */
+let connectTimer = null;
+function initConnectScreen() {
+  if (connectTimer) clearTimeout(connectTimer);
+
+  const statusCard = document.getElementById('conn-status-card');
+  const dot = document.getElementById('conn-dot');
+  const text = document.getElementById('conn-status-text');
+  const btn = document.getElementById('conn-start-btn');
+
+  // Initial 0~3s state: Red / Waiting
+  if (statusCard) {
+    statusCard.style.background = '#FFF0F0';
+    statusCard.style.borderColor = '#FFCDD2';
+  }
+  if (dot) {
+    dot.style.background = '#E74C3C';
+  }
+  if (text) {
+    text.textContent = 'Waiting for connection...';
+    text.style.color = '#C0392B';
+  }
+  if (btn) {
+    btn.disabled = true;
+    btn.style.opacity = '0.45';
+    btn.textContent = 'Waiting for connection...';
+  }
+
+  // After 3 seconds: Transition to Green / Connected
+  connectTimer = setTimeout(() => {
+    if (statusCard) {
+      statusCard.style.background = '#EBF9F1';
+      statusCard.style.borderColor = '#B7ECCB';
+    }
+    if (dot) {
+      dot.style.background = '#27AE60';
+    }
+    if (text) {
+      text.textContent = 'Device Connected';
+      text.style.color = '#1E7E34';
+    }
+    if (btn) {
+      btn.disabled = false;
+      btn.style.opacity = '1';
+      btn.textContent = 'Start Adventure';
+    }
+  }, 3000);
+}
+
+
+/* ── 3D Story Card Flip Logic ── */
+
+function genCustomStory() {
+  const input = document.getElementById('custom-story-input');
+  const btn = document.getElementById('btn-custom-story');
+  const val = input ? input.value.trim() : '';
+  if (!val) return;
+
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = 'Updating...';
+  }
+
+  setTimeout(() => {
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = 'AI Create';
+    }
+
+    const titleEl = document.getElementById('ns3-title');
+    const bodyEl = document.getElementById('ns3-body');
+    const badgeEl = document.getElementById('ns3-badge');
+    const frontBadge = document.getElementById('ns3-front-badge');
+    const tagsEl = document.getElementById('ns3-tags');
+
+    const childSel = [...document.querySelectorAll('.pc-child.sel')];
+    const childName = childSel[0] ? childSel[0].dataset.name : 'Hero';
+
+    if (titleEl) titleEl.textContent = val;
+    if (badgeEl) badgeEl.textContent = val;
+    if (frontBadge) frontBadge.textContent = val;
+    if (bodyEl) {
+      bodyEl.innerHTML = `<strong>${childName}</strong> and the team embark on an exciting custom mission: <em>${val}</em>! Together with <strong>Coco (Moon Rabbit)</strong>, they gather special items and solve magical clues along the way.`;
+    }
+    if (tagsEl) {
+      tagsEl.innerHTML = '<div class="stag">Custom Quest</div><div class="stag">Creative</div><div class="stag">Adventure</div>';
+    }
+
+    // Flip to back side to immediately reveal generated story
+    const flipInner = document.getElementById('story-flip-inner');
+    if (flipInner) flipInner.classList.add('is-flipped');
+
+    if (input) input.value = '';
+  }, 900);
+}
+
+function toggleStoryCardFlip() {
+  const inner = document.getElementById('story-flip-inner');
+  if (inner) inner.classList.toggle('is-flipped');
+}
+
+/* ── Navigation ── */
+let hist=[],cur='s-splash';
+function go(id){
+  if (id === 's-ns1') {
+    renderNS1Members();
+  }
+  if (id === 's-connect') {
+    initConnectScreen();
+  }
+  // Aliases for backwards compatibility
+  if (id === 's-edit-child') { openMemberProfile('jiwoo'); return; }
+  if (id === 's-edit-somi') { openMemberProfile('somi'); return; }
+  if (id === 's-edit-parent') { openMemberProfile('mom'); return; }
+  if (id === 's-edit-dad') { openMemberProfile('dad'); return; }
+
+  const c=document.getElementById(cur),n=document.getElementById(id);
+  if(!n)return;
+  hist.push(cur);c.classList.remove('active');n.classList.add('active');cur=id;
+  const b=n.querySelector('.bd');if(b)b.scrollTop=0;
+  if(id==='s-roleplay')initTimer();
+  updateBottomNav(id);
+}
+function updateBottomNav(id) {
+  document.querySelectorAll('#global-bnav .bnt').forEach(b => b.classList.remove('active'));
+  if (id === 's-home' || id === 's-ns1' || id === 's-ns2' || id === 's-ns3' || id === 's-ns4' || id === 's-ns5' || id === 's-connect' || id === 's-roleplay' || id === 's-add-member' || id.startsWith('s-reg-')) {
+    document.getElementById('bnt-home')?.classList.add('active');
+  } else if (id === 's-stories' || id.startsWith('s-summary')) {
+    document.getElementById('bnt-stories')?.classList.add('active');
+  } else if (id === 's-progress') {
+    document.getElementById('bnt-progress')?.classList.add('active');
+  } else if (id === 's-settings' || id === 's-subscription' || id === 's-edit-member') {
+    document.getElementById('bnt-settings')?.classList.add('active');
+  }
+}
+function back(){
+  if(!hist.length)return;
+  const p=hist.pop(),c=document.getElementById(cur),n=document.getElementById(p);
+  if(!n) return;
+  c.classList.remove('active');n.classList.add('active');cur=p;
+  updateBottomNav(p);
+}
+
+/* ── Pill pickers ── */
+const levelDescs=[
+  'Understands home conversations but rarely speaks back',
+  'Can answer simple questions and make requests',
+  'Can hold conversations but vocabulary is limited to daily topics',
+  'Fluent in everyday topics — ready for rich vocabulary and complex stories'
+];
+function pickPill(el,grp,descId){
+  document.getElementById(grp).querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  if(descId){const d=document.getElementById(descId);if(d){const i=Array.from(el.parentElement.children).indexOf(el);d.textContent=levelDescs[i]||'';}}
+}
+function pickFilter(el){
+  el.parentElement.querySelectorAll('.fpill').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+}
+function pickTheme(el){
+  document.querySelectorAll('.tc').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+  const nextBtn = document.getElementById('ns2-next');
+  if (nextBtn) {
+    nextBtn.disabled = false;
+    nextBtn.style.opacity = '1';
+    nextBtn.textContent = 'Next →';
+  }
+}
+function pickVC(el){
+  document.querySelectorAll('.vc').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  const nextBtn = document.getElementById('ns4-next');
+  if (nextBtn) {
+    nextBtn.disabled = false;
+    nextBtn.style.opacity = '1';
+    nextBtn.textContent = 'Next →';
+  }
+}
+function pickPRS(el){
+  document.querySelectorAll('.prs').forEach(c=>c.classList.remove('sel'));el.classList.add('sel');
+}
+
+/* ── General click delegation ── */
+document.addEventListener('click',e=>{
+  const it=e.target.closest('.itag');if(it && !it.closest('#pm-interests-grid'))it.classList.toggle('active');
+  const av=e.target.closest('.avpick');
+  if(av){av.parentElement.querySelectorAll('.avpick').forEach(a=>a.classList.remove('active'));av.classList.add('active');}
+});
+
+/* ── Toggle ── */
+function toggleSw(el){el.classList.toggle('on');}
+
+/* ── Navigate to NS2 with dynamic theme update ── */
+function getSessionLevel() {
+  const childSel = [...document.querySelectorAll('.pc-child.sel')];
+  if (childSel.length === 1) {
+    return childSel[0].dataset.level || '🌿 Conversational';
+  } else if (childSel.length >= 2) {
+    const activePill = document.querySelector('#multi-level-box .fpill.active');
+    return activePill ? activePill.textContent.trim() : '🌿 Conversational';
+  }
+  return '🌿 Conversational';
+}
+
+function buildThemeCard(emoji, name, desc, isSelected = false) {
+  return `
+    <div class="tc ${isSelected ? 'sel' : ''}" data-name="${name}" onclick="pickTheme(this)">
+      <div class="tc-chk">✓</div>
+      <div class="tcemoji">${emoji}</div>
+      <div class="tcname">${name}</div>
+      <div class="tcdesc">${desc}</div>
+    </div>
+  `;
+}
+
+function goNs2(){
+  const sel=[...document.querySelectorAll('.pc-child.sel')];
+  const adultSel=[...document.querySelectorAll('.pc-adult.sel')];
+  const count=sel.length;
+  if(count === 0 || adultSel.length === 0) return;
+
+  // Show minimal circle loading page
+  go('s-loading');
+
+  setTimeout(() => {
+    const lbl = document.getElementById('ns2-lbl');
+    const note = document.getElementById('ns2-note');
+    const grid = document.getElementById('ns2-themes');
+    const nextBtn = document.getElementById('ns2-next');
+
+    if (count >= 2) {
+      const names = sel.map(s => s.dataset.name).join(' & ');
+      lbl.textContent = `Recommended Worlds for ${names}`;
+      note.textContent = `Blended themes and stories for ${names}`;
+      
+      grid.innerHTML = [
+        buildThemeCard('🌲', 'Fairy Dino Forest', 'Ride friendly dinosaurs through glowing crystal trees', false),
+        buildThemeCard('🐱', 'Rainbow Cat Kingdom', 'Magical cats who paint the morning sky with colors', false),
+        buildThemeCard('🎪', 'Magical Animal Circus', 'A secret circus where friendly creatures solve mysteries', false),
+        buildThemeCard('⭐', 'Stardust Dino Valley', 'Ancient gentle dinosaurs that glow under starry skies', false),
+        buildThemeCard('🌿', 'Enchanted Nature Clinic', 'Help animals and fairies heal the enchanted meadow', false)
+      ].join('');
+    } else {
+      const name = sel[0].dataset.name || 'Child';
+      lbl.textContent = `Recommended Worlds for ${name}`;
+      note.textContent = `Tailored to ${name}'s favorite themes and interests`;
+
+      if (name.toLowerCase().includes('somi')) {
+        grid.innerHTML = [
+          buildThemeCard('🌕', 'Packing for a Moon Picnic', 'Prepare food and gear for a picnic on the moon with EduAI', false),
+          buildThemeCard('🐱', 'Rainbow Cat Cafe', 'Friendly magical cats who grant sweet wishes', false),
+          buildThemeCard('🌈', 'Rainbow Cloud Island', 'Explore fluffy rainbow clouds floating in the sky', false),
+          buildThemeCard('🎪', 'The Enchanted Circus', 'Join circus performers with hidden magical talents', false),
+          buildThemeCard('🍭', 'Candy Wonderland', 'A sweet and cheerful puzzle quest across Candy City', false)
+        ].join('');
+      } else {
+        grid.innerHTML = [
+          buildThemeCard('🦕', 'Jurassic Dino Kingdom', 'Track mysterious ancient footprints near the volcano', false),
+          buildThemeCard('🧜', 'Fantasy Coral Cove', 'Explore a magical underwater palace and find pearls', false),
+          buildThemeCard('🐾', 'Talking Animal Town', 'Run a secret investigation clinic in animal city', false),
+          buildThemeCard('🏯', 'Palace of Legends', 'Discover hidden ancient scrolls in a royal castle', false),
+          buildThemeCard('🚀', 'Starlight Galaxy Camp', 'Travel through space constellations with alien crew', false)
+        ].join('');
+      }
+    }
+
+    // Next button initial state on ns2
+    if (nextBtn) {
+      nextBtn.disabled = true;
+      nextBtn.style.opacity = '0.45';
+      nextBtn.textContent = 'Select a World';
+    }
+
+    go('s-ns2');
+  }, 1300);
+}
+
+/* ── Navigate to NS3 with dynamic story + roles ── */
+let currentRoleCardIndex = 0;
+function openRoleEditCard(idx, currentName, currentEmoji) {
+  currentRoleCardIndex = idx;
+  document.getElementById('re-name').value = currentName || '';
+  
+  // Select matching emoji
+  document.querySelectorAll('#role-avrow .avpick').forEach(p => {
+    p.classList.toggle('active', p.textContent.trim() === currentEmoji);
+  });
+  
+  document.getElementById('ov-role').classList.add('active');
+  document.getElementById('bs-role').classList.add('active');
+}
+
+function saveRoleEdit() {
+  const newName = document.getElementById('re-name').value.trim() || 'Hero Character';
+  const newEmoji = document.querySelector('#role-avrow .avpick.active')?.textContent.trim() || '🎭';
+  
+  const roleCard = document.getElementById('role-card-' + currentRoleCardIndex);
+  if (roleCard) {
+    const avEl = roleCard.querySelector('.rcav');
+    const nameEl = roleCard.querySelector('.rcname');
+    if (avEl) avEl.textContent = newEmoji;
+    if (nameEl) nameEl.textContent = newName;
+  }
+  closeRoleEdit();
+}
+
+
+
+
+
+function onAppLangChange(sel) {
+  const val = sel.value;
+  showSaveNotice('App Language updated to ' + val);
+}
+
+function onHeritageLangChange(sel) {
+  const val = sel.value;
+  showSaveNotice('Heritage Language set to ' + val);
+}
+
+function showSaveNotice(msg) {
+  let notice = document.getElementById('lang-save-notice');
+  if (!notice) {
+    notice = document.createElement('div');
+    notice.id = 'lang-save-notice';
+    notice.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#1A1A2E;color:#fff;padding:8px 18px;border-radius:20px;font-size:13px;font-weight:700;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,0.25);transition:opacity 0.3s ease;pointer-events:none;';
+    document.body.appendChild(notice);
+  }
+  notice.textContent = '✓ ' + msg;
+  notice.style.opacity = '1';
+  setTimeout(() => {
+    if (notice) notice.style.opacity = '0';
+  }, 1800);
+}
+
+function toggleAppSettingsAccordion() {
+  const content = document.getElementById('app-settings-content');
+  const icon = document.getElementById('app-settings-triangle-icon');
+  if (!content) return;
+  
+  const isHidden = content.style.display === 'none' || content.style.display === '';
+  if (isHidden) {
+    content.style.display = 'flex';
+    if (icon) icon.textContent = '▲';
+  } else {
+    content.style.display = 'none';
+    if (icon) icon.textContent = '▼';
+  }
+}
+
+function togglePrivacyAccordion() {
+  const content = document.getElementById('privacy-content');
+  const icon = document.getElementById('privacy-triangle-icon');
+  if (!content) return;
+  
+  const isHidden = content.style.display === 'none' || content.style.display === '';
+  if (isHidden) {
+    content.style.display = 'block';
+    if (icon) icon.textContent = '▲';
+  } else {
+    content.style.display = 'none';
+    if (icon) icon.textContent = '▼';
+  }
+}
+
+function openPrivacyTerms() {
+  const ov = document.getElementById('ov-privacy');
+  const bs = document.getElementById('bs-privacy');
+  if (ov && bs) {
+    ov.classList.add('active');
+    bs.classList.add('active');
+  }
+}
+
+function closePrivacyTerms() {
+  const ov = document.getElementById('ov-privacy');
+  const bs = document.getElementById('bs-privacy');
+  if (ov && bs) {
+    ov.classList.remove('active');
+    bs.classList.remove('active');
+  }
+}
+
+function closeRoleEdit(){
+  document.getElementById('ov-role').classList.remove('active');
+  document.getElementById('bs-role').classList.remove('active');
+}
+
+function goNs3(){
+  const selectedThemeCard = document.querySelector('.tc.sel');
+  if (!selectedThemeCard) return;
+
+  // Show minimal circle loading page
+  go('s-loading');
+
+  setTimeout(() => {
+    actuallyExecuteGoNs3();
+  }, 1300);
+}
+
+function actuallyExecuteGoNs3(){
+  const childSel=[...document.querySelectorAll('.pc-child.sel')];
+  const adultSel=[...document.querySelectorAll('.pc-adult.sel')];
+  const count=childSel.length;
+  const childNames = childSel.map(c => c.dataset.name);
+  
+  const selectedThemeCard = document.querySelector('.tc.sel');
+  const selectedThemeName = selectedThemeCard ? selectedThemeCard.querySelector('.tcname')?.textContent.trim() : '';
+  const isMoonPicnic = selectedThemeName === 'Packing for a Moon Picnic' || (!selectedThemeName && childNames[0] && childNames[0].toLowerCase().includes('somi'));
+
+  let storyBadge = 'Jurassic Dino Kingdom';
+  let storyTitle = 'The Mystery of the Missing Egg';
+  let storyBody = '';
+  let storyTags = 'Mystery|Teamwork|Adventure';
+
+  const frontEl = document.getElementById('story-card-front');
+  const flipInner = document.getElementById('story-flip-inner');
+  if (flipInner) flipInner.classList.remove('is-flipped'); // Start with pure art front
+
+  if (frontEl) {
+    if (isMoonPicnic) {
+      frontEl.style.background = "url('moon_picnic_bg.jpg') center center / cover no-repeat";
+    } else if (selectedThemeName && selectedThemeName.toLowerCase().includes('dino')) {
+      frontEl.style.background = "url('icon_dino.jpg') center center / cover no-repeat";
+    } else if (selectedThemeName && selectedThemeName.toLowerCase().includes('space')) {
+      frontEl.style.background = "url('icon_space.jpg') center center / cover no-repeat";
+    } else {
+      frontEl.style.background = "url('moon_picnic_bg.jpg') center center / cover no-repeat";
+    }
+  }
+
+  if (count >= 2) {
+    storyBadge = 'Fairy Dino Forest';
+    storyTitle = 'The Lost Rainbow Egg';
+    storyBody = `Deep in the magical Fairy Dino Forest, the <em>Rainbow Egg</em> has gone missing! ${childNames.map(n => `<strong>${n}</strong>`).join(' and ')} team up together with <strong>Rex</strong> the talking T-Rex to crack the mystery before sundown!`;
+    storyTags = 'Adventure|Teamwork|Magic';
+  } else if (isMoonPicnic) {
+    storyBadge = 'Packing for a Moon Picnic';
+    storyTitle = 'Packing for a Moon Picnic';
+    storyBody = `On a beautiful sunny day, <strong>${childNames[0] || 'Hero'}</strong> and mother are astronauts preparing for a picnic on the moon. <strong>Coco</strong> the moon rabbit will meet them at the picnic site with delicious treats!`;
+    storyTags = 'Space|Picnic|Family';
+  } else {
+    const mainChild = childNames[0] || 'Hero';
+    storyBody = `A hush fell over the Dino Kingdom — <em>the legendary Rainbow Egg</em> has vanished! <strong>${mainChild}</strong> (Young Paleontologist) and <strong>Rex</strong> the talking T-Rex follow mysterious glowing tracks near the volcano… Can the team crack the mystery?`;
+  }
+
+  document.getElementById('ns3-badge').textContent=storyBadge;
+  const fb = document.getElementById('ns3-front-badge'); if(fb) fb.textContent=storyBadge;
+  document.getElementById('ns3-title').textContent=storyTitle;
+  document.getElementById('ns3-body').innerHTML=storyBody;
+  document.getElementById('ns3-tags').innerHTML=storyTags.split('|').map(t=>`<div class="stag">${t}</div>`).join('');
+
+  // Dynamic roles list
+  const aiDisplayName = isMoonPicnic ? 'Coco (AI)' : 'Rex (AI)';
+  const aiDefaultRole = isMoonPicnic ? 'Moon Rabbit' : 'Talking T-Rex';
+  const aiEmoji = isMoonPicnic ? '🐰' : '🦖';
+  let rolesHtml = `
+    <div class="rc air" id="role-card-0" onclick="openRoleEditCard(0, '${aiDefaultRole}', '${aiEmoji}')">
+      <div class="rcav">${aiEmoji}</div>
+      <div class="rcinfo">
+        <div class="rcwho">${aiDisplayName}</div>
+        <div class="rcname">${aiDefaultRole}</div>
+      </div>
+      <div class="rcedit">✏️</div>
+    </div>
+  `;
+
+  let cardIdx = 1;
+  childSel.forEach(c => {
+    const m = members.find(x => x.id === c.dataset.id) || { name: c.dataset.name };
+    const av = m.photo ? `<img class="av-img" src="${m.photo}">` : (m.emoji || '🧒');
+    const defaultRoleName = isMoonPicnic ? 'Astronaut choosing food' : 'Fossil (Paleontologist)';
+    rolesHtml += `
+      <div class="rc chr" id="role-card-${cardIdx}" onclick="openRoleEditCard(${cardIdx}, '${defaultRoleName}', '${m.emoji || '🧒'}')">
+        <div class="rcav">${av}</div>
+        <div class="rcinfo">
+          <div class="rcwho">${m.name} (Hero)</div>
+          <div class="rcname">${defaultRoleName}</div>
+        </div>
+        <div class="rcedit">✏️</div>
+      </div>
+    `;
+    cardIdx++;
+  });
+
+  adultSel.forEach(a => {
+    const m = members.find(x => x.id === a.dataset.id) || { name: a.dataset.name, emoji: '🧑', rel: 'Supporter' };
+    const av = m.photo ? `<img class="av-img" src="${m.photo}">` : (m.emoji || '🧑');
+    const defaultRoleName = isMoonPicnic ? 'Astronaut teammate' : 'Triceratops Sage';
+    rolesHtml += `
+      <div class="rc cor" id="role-card-${cardIdx}" onclick="openRoleEditCard(${cardIdx}, '${defaultRoleName}', '${m.emoji || '🧑'}')">
+        <div class="rcav" style="overflow:hidden">${av}</div>
+        <div class="rcinfo">
+          <div class="rcwho">${m.name} (${m.rel || 'Supporter'})</div>
+          <div class="rcname">${defaultRoleName}</div>
+        </div>
+        <div class="rcedit">✏️</div>
+      </div>
+    `;
+    cardIdx++;
+  });
+
+  document.getElementById('ns3-roles').innerHTML = rolesHtml;
+  go('s-ns3');
+}
+
+/* ── Live Play Session Handlers ── */
+
+function goNs4() {
+  const titleEl = document.getElementById('ns4-title');
+  const hintEl = document.getElementById('ns4-hint');
+  if (titleEl) titleEl.textContent = 'Choose Voice Style';
+  if (hintEl) hintEl.textContent = 'Pick the voice style for your AI companion · You can change this anytime.';
+
+  // Reset any selections so none are selected initially
+  document.querySelectorAll('#s-ns4 .vc').forEach(c => c.classList.remove('sel'));
+  document.querySelectorAll('#s-ns4 .prs').forEach(c => c.classList.remove('sel'));
+
+  const nextBtn = document.getElementById('ns4-next');
+  if (nextBtn) {
+    nextBtn.disabled = true;
+    nextBtn.style.opacity = '0.45';
+    nextBtn.textContent = 'Select a Voice Style';
+  }
+
+  go('s-ns4');
+}
+
+function goNs5() {
+  const childSel = [...document.querySelectorAll('.pc-child.sel')];
+  const adultSel = [...document.querySelectorAll('.pc-adult.sel')];
+  const childNames = childSel.map(c => c.dataset.name);
+  const adultNames = adultSel.map(a => a.dataset.name);
+  const allNames = [...childNames, ...adultNames].join(' & ');
+
+  const selectedThemeCard = document.querySelector('.tc.sel');
+  const selectedThemeName = selectedThemeCard ? selectedThemeCard.querySelector('.tcname')?.textContent.trim() : '';
+  const isMoonPicnic = selectedThemeName === 'Packing for a Moon Picnic' || (!selectedThemeName && childNames[0] && childNames[0].toLowerCase().includes('somi'));
+
+  const worldEl = document.getElementById('launch-val-world');
+  const storyEl = document.getElementById('launch-val-story');
+  const aiEl = document.getElementById('launch-val-ai');
+  const playersEl = document.getElementById('launch-val-players');
+  const langEl = document.getElementById('launch-val-lang');
+
+  if (worldEl) worldEl.textContent = isMoonPicnic ? 'Packing for a Moon Picnic' : (selectedThemeName || 'Jurassic Dino Kingdom');
+  if (storyEl) storyEl.textContent = isMoonPicnic ? 'Packing for a Moon Picnic' : (document.getElementById('ns3-title')?.textContent || 'Mystery of the Missing Egg');
+  if (aiEl) aiEl.textContent = isMoonPicnic ? 'Coco (Moon Rabbit)' : 'Rex (Talking T-Rex)';
+  if (playersEl) playersEl.textContent = allNames || 'Hero & Supporter';
+  if (langEl) langEl.textContent = 'Korean (' + getSessionLevel() + ')';
+
+  go('s-ns5');
+}
+
+function startPlaySession() {
+  const childSel = [...document.querySelectorAll('.pc-child.sel')];
+  const selectedThemeCard = document.querySelector('.tc.sel');
+  const selectedThemeName = selectedThemeCard ? selectedThemeCard.querySelector('.tcname')?.textContent.trim() : '';
+  const isMoonPicnic = selectedThemeName === 'Packing for a Moon Picnic' || (!selectedThemeName && childSel[0] && childSel[0].dataset.name.toLowerCase().includes('somi'));
+
+  const titleEl = document.getElementById('live-scene-title');
+  const speakerEl = document.getElementById('live-speaker-name');
+  if (titleEl) titleEl.textContent = isMoonPicnic ? 'Packing for a Moon Picnic' : (selectedThemeName || 'Jurassic Dino Kingdom');
+  if (speakerEl) speakerEl.textContent = 'Live Adventure in Progress';
+
+  go('s-roleplay');
+  if (typeof initTimer === 'function') initTimer();
+}
+
+let liveSimIdx = 0;
+const liveTips = [
+  'Rex arrived at the cave entrance. Encourage your child to suggest what tools to bring in Korean.',
+  'Jiwoo just used a new heritage word "야행성 (Nocturnal)"! Praise their vocabulary warmly.',
+  'Mom\'s turn: Read the ancient map and guide the path into the forest with a sentence in Korean.'
+];
+
+function simulateLiveTurn() {
+  const speakerName = document.getElementById('live-speaker-name');
+  const tipBox = document.getElementById('live-parent-hint-box');
+  liveSimIdx = (liveSimIdx + 1) % 3;
+  
+  if (liveSimIdx === 1) {
+    speakerName.textContent = 'Jiwoo is speaking in Korean... 👦';
+    tipBox.innerHTML = `💡 <strong>Parent Coaching Tip:</strong> ${liveTips[1]}`;
+  } else if (liveSimIdx === 2) {
+    speakerName.textContent = 'Mom (Supporting Player) is speaking in Korean... 👩';
+    tipBox.innerHTML = `💡 <strong>Parent Coaching Tip:</strong> ${liveTips[2]}`;
+  } else {
+    speakerName.textContent = 'Rex (AI) is speaking through the toy... 🦖';
+    tipBox.innerHTML = `💡 <strong>Parent Coaching Tip:</strong> ${liveTips[0]}`;
+  }
+}
+
+/* ── Child toggle + level logic (NS1) ── */
+function toggleChild(el){
+  el.classList.toggle('sel');
+  el.querySelector('.pcchk').textContent = el.classList.contains('sel') ? '✓' : '';
+  updateChildMode();
+}
+
+function toggleJoin(el){
+  el.classList.toggle('sel');
+  el.querySelector('.pcchk').textContent = el.classList.contains('sel') ? '✓' : '';
+  updateChildMode();
+}
+
+function updateChildMode(){
+  const childSel = [...document.querySelectorAll('.pc-child.sel')];
+  const adultSel = [...document.querySelectorAll('.pc-adult.sel')];
+  const childCount = childSel.length;
+  const adultCount = adultSel.length;
+  const multiBox = document.getElementById('multi-level-box');
+  const singleNote = document.getElementById('single-level-note');
+  const nextBtn = document.getElementById('ns1-next');
+
+  if (childCount === 1) {
+    if (multiBox) multiBox.style.display = 'none';
+    if (singleNote) {
+      singleNote.style.display = 'flex';
+      const name = childSel[0].dataset.name || 'Child';
+      const level = childSel[0].dataset.level || '';
+      const n = document.getElementById('single-child-name'); if (n) n.textContent = name;
+      const l = document.getElementById('single-child-level'); if (l) l.textContent = (level || '').replace(/^[^\w\s가-힣]+\s*/, '');
+    }
+  } else if (childCount >= 2) {
+    if (multiBox) multiBox.style.display = 'flex';
+    if (singleNote) singleNote.style.display = 'none';
+  } else {
+    if (multiBox) multiBox.style.display = 'none';
+    if (singleNote) singleNote.style.display = 'none';
+  }
+
+  const isValid = (childCount >= 1 && adultCount >= 1);
+  if (nextBtn) {
+    nextBtn.disabled = !isValid;
+    nextBtn.style.opacity = isValid ? '1' : '0.45';
+    if (childCount === 0 && adultCount === 0) {
+      nextBtn.textContent = 'Select at least 1 Child & 1 Supporter';
+    } else if (childCount === 0) {
+      nextBtn.textContent = 'Select at least 1 Child';
+    } else if (adultCount === 0) {
+      nextBtn.textContent = 'Select at least 1 Supporting Player';
+    } else {
+      nextBtn.textContent = 'Next →';
+    }
+  }
+}
+
+/* ── Age stepper ── */
+let age=8;
+function stepAge(d){age=Math.max(3,Math.min(15,age+d));document.getElementById('age-val').textContent=age;}
+
+/* ── Voice rec ── */
+let recState={};
+function toggleRec(id){
+  const btn=document.getElementById('rec-'+id),st=document.getElementById('rs-'+id),wf=document.getElementById('wf-'+id);
+  if(!recState[id]){
+    recState[id]=true;btn.classList.add('recording');
+    st.textContent='Recording… tap again to stop';animWave(wf);
+  } else {
+    recState[id]=false;btn.classList.remove('recording');
+    st.textContent='✓ Recorded! Tap to re-record';st.style.color='var(--teal)';
+    wf.innerHTML='';wf.style.background='';
+    const vs=document.getElementById('vs-'+id);if(vs)vs.style.display='block';
+  }
+}
+function animWave(el){
+  el.innerHTML='';el.style.background='rgba(255,71,87,.05)';
+  const style=document.getElementById('wv-style')||document.createElement('style');
+  style.id='wv-style';
+  style.textContent='@keyframes wv{from{transform:scaleY(.3)}to{transform:scaleY(1)}}';
+  document.head.appendChild(style);
+  for(let i=0;i<22;i++){
+    const b=document.createElement('div');
+    b.style.cssText=`display:inline-block;width:6px;margin:0 2px;border-radius:3px;background:rgba(255,71,87,.6);
+      animation:wv ${.4+Math.random()*.6}s ease-in-out ${Math.random()*.4}s infinite alternate;
+      height:${6+Math.random()*28}px;vertical-align:middle;`;
+    el.appendChild(b);
+  }
+}
+
+/* ── Custom theme ── */
+function genCustom(){
+  const inp=document.getElementById('custom-input'),btn=inp.nextElementSibling;
+  if(!inp.value.trim()){inp.focus();return;}
+  btn.textContent='Creating…';btn.disabled=true;
+  setTimeout(()=>{btn.textContent='Created ✓';btn.style.color='var(--teal)';btn.style.borderColor='var(--teal)';
+    setTimeout(()=>{btn.textContent='AI Create';btn.disabled=false;btn.style.color='';btn.style.borderColor='';},2200);
+  },1300);
+}
+
+/* ── Story regen ── */
+function refreshStory(){
+  const btn=document.querySelector('.sregen');btn.textContent='🔄 Creating…';btn.disabled=true;
+  setTimeout(()=>{btn.textContent='🔄 Regenerate';btn.disabled=false;},1600);
+}
+
+/* ── Subscription plan select ── */
+function selectPlan(el,id){
+  document.querySelectorAll('.plan-card').forEach(c=>{c.classList.remove('active-plan');
+    const cur=c.querySelector('.plan-cur');if(cur)cur.remove();});
+  el.classList.add('active-plan');
+}
+
+/* ── Role edit sheet ── */
+function openRoleEdit(name,desc){
+  document.getElementById('re-name').value=name||'';
+  document.getElementById('re-desc').value=desc||'';
+  document.getElementById('ov-role').classList.add('active');
+  document.getElementById('bs-role').classList.add('active');
+}
+function closeRoleEdit(){
+  document.getElementById('ov-role').classList.remove('active');
+  document.getElementById('bs-role').classList.remove('active');
+}
+
+/* ── Exit sheet ── */
+function confirmExit(){document.getElementById('ov-exit').classList.add('active');document.getElementById('bs-exit').classList.add('active');}
+function closeExit(){document.getElementById('ov-exit').classList.remove('active');document.getElementById('bs-exit').classList.remove('active');}
+function endSession() {
+  if (typeof closeExit === 'function') closeExit();
+  if (timerInt) clearInterval(timerInt);
+  go('s-summary-best');
+}
+
+/* ── Mic / simulate child response ── */
+let micOn=false;
+function toggleMic(){
+  micOn=!micOn;
+  const btn=document.getElementById('rp-mic'),ic=document.getElementById('mic-icon');
+  if(micOn){
+    btn.classList.add('listen');ic.textContent='⏺️';
+    const t=document.getElementById('typing-indicator');if(t)t.style.display='flex';
+    setTimeout(()=>{
+      if(micOn){micOn=false;btn.classList.remove('listen');ic.textContent='🎙️';}
+      addChildMsg();
+    },2800);
+  } else {btn.classList.remove('listen');ic.textContent='🎙️';const t=document.getElementById('typing-indicator');if(t)t.style.display='none';}
+}
+function addChildMsg(){
+  const ti=document.getElementById('typing-indicator');if(ti)ti.style.display='none';
+  const ca=document.getElementById('chat-area');
+  const d=document.createElement('div');d.className='bbl chb';
+  d.innerHTML=`<div class="bcont rcont"><div class="bwho r">Jiwoo · Fossil 🦴</div>
+    <div class="btxt">음… 야행성 동물들은 빛을 싫어하니까… 밤에 이동하면 돼! 그리고 횃불 같은 거 들고 가면 막을 수도 있어!</div></div>
+    <div class="bav">🦴</div>`;
+  ca.appendChild(d);ca.scrollTop=ca.scrollHeight;
+  setTimeout(()=>{addAIMsg();setChip('ai');},1800);
+}
+function addAIMsg(){
+  const ca=document.getElementById('chat-area');
+  const d=document.createElement('div');d.className='bbl';
+  d.innerHTML=`<div class="bav">🦖</div><div class="bcont"><div class="bwho">Rex (AI 🦖)</div>
+    <div class="btxt">[꼬리를 힘차게 흔들며]<br><br>바로 그거야, 포실! 네가 없었으면 어쩔 뻔 했어. 트리케라 현자님, 지도에서 숲 입구로 가는 제일 빠른 길 좀 찾아주실 수 있으세요? 해가 지기 전에 출발해야 해요!</div></div>`;
+  ca.appendChild(d);ca.scrollTop=ca.scrollHeight;
+}
+function setChip(who){
+  ['ai','ch','co'].forEach(c=>{const el=document.getElementById('chip-'+c);if(el)el.classList.remove('active');});
+  const t=document.getElementById('chip-'+who);if(t)t.classList.add('active');
+}
+
+/* ── Timer (Counts up from 00:00) ── */
+let timerInt=null,timerSec=0;
+function initTimer(){
+  if(timerInt)clearInterval(timerInt);
+  timerSec=0;
+  updateTimer();
+  timerInt=setInterval(()=>{
+    timerSec++;
+    updateTimer();
+  },1000);
+}
+function updateTimer(){
+  const m=String(Math.floor(timerSec/60)).padStart(2,'0'),s=String(timerSec%60).padStart(2,'0');
+  const el=document.getElementById('rp-timer');if(el)el.textContent=`${m}:${s}`;
+}
+
+/* ── Hint ── */
+function toggleHint(){const h=document.getElementById('hint-bar');h.style.display=h.style.display==='none'?'flex':'none';}
+function closeHint(){document.getElementById('hint-bar').style.display='none';}
+
+/* ── ESC ── */
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeRoleEdit();closeExit();}});
+
+/* ── Child switcher (Growth) ── */
+function switchChild(name){
+  document.querySelectorAll('.ctab').forEach(t=>t.classList.remove('active'));
+  const activeTab = document.getElementById('ct-'+name);
+  if(activeTab) activeTab.classList.add('active');
+  document.querySelectorAll('.cpanel').forEach(p=>p.classList.remove('active'));
+  const activePanel = document.getElementById('cp-'+name);
+  if(activePanel) activePanel.classList.add('active');
+}
+
+/* ── Member filter (Adventures) ── */
+function pickMember(el, memberId){
+  el.closest('.mfrow').querySelectorAll('.mfchip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+/* ── Initialization ── */
+document.addEventListener('DOMContentLoaded', () => {
+  renderAllMembers();
+});
+renderAllMembers();
+</script>
+</body>
+</html>
